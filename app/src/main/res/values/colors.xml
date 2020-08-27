@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ec5757</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    <color name="mediaBGcolor">#5854a3</color>
+    <color name="category1">#fdda8a</color>
+    <color name="textColor">#0a0a0a</color>
+    <color name="textColorSecondary">#252525</color>
+    <color name="category_2">#cee6e7</color>
+    <color name="category_3">#e8d1e5</color>
+    <color name="emptyView_Btn_1">#b5dbf7</color>
+    <color name="progressBarColor">#bae2fe</color>
+    <color name="textColorTertray">#979797</color>
+    <color name="emptyViewColor">#DDE1E5</color>
+
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MMPodCasts</string>
+    <string name="welcome">Welcome</string>
+    <string name="empty_message">It looks like you aren\'t enrolled in any podcasts., but it\'s easy to get started.</string>
+    <string name="btn_reload">Reload</string>
+    <string name="btn_empty_find">FIND SOMETHING NEW</string>
+</resources>

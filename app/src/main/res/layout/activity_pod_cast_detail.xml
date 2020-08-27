@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PodCastDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:contentScrim="#fff"
+        app:expandedTitleGravity="start|top"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+        app:scrimAnimationDuration="1000"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clProfileInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/viewTransparant"
+            android:layout_marginTop="0dp"
+         >
+            <androidx.cardview.widget.CardView
+                android:id="@+id/deatilCardLayout"
+                android:layout_width="match_parent"
+                app:cardCornerRadius="@dimen/margin_large"
+                app:cardBackgroundColor="#fff"
+                android:layout_height="wrap_content"
+                app:cardElevation="@dimen/margin_small">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/ivMoviesImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder" />
+            <View
+                android:id="@+id/viewTransparantDetail"
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="3dp" />
+
+            <TextView
+                android:id="@+id/tvDetailPodCastCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_xlarge"
+                android:layout_marginLeft="@dimen/margin_xxlarge"
+                android:layout_above="@id/viewTransparantDetail"
+                android:background="@drawable/button_background"
+                android:padding="@dimen/margin_medium"
+                android:text="Art &amp; Design"
+                android:textColor="@color/textColor"
+                android:textSize="@dimen/text_regular_2x" />
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

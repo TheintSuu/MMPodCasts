@@ -10,6 +10,7 @@ import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
 import kotlinx.android.synthetic.main.fragment_download.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate as PodCastItemDelegate1
 
 private const val ARG_PARAM1 = "param1"
@@ -45,8 +46,8 @@ class HomeFragment : Fragment(), PodCastItemDelegate1 {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         mMainAdapter = PodCastAdapter(this)
         val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        mainRecyler.layoutManager = linearLayoutManager
-        mainRecyler.adapter =  mMainAdapter
+       rvPodCastUpNext.layoutManager = linearLayoutManager
+        rvPodCastUpNext.adapter =  mMainAdapter
 
     }
 

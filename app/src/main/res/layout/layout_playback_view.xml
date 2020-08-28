@@ -15,9 +15,6 @@
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardCornerRadius="@dimen/margin_large"
         app:cardElevation="@dimen/margin_small"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,6 +41,7 @@
                 android:layout_toEndOf="@id/ivPlaybackImage"
                 android:ellipsize="end"
                 android:textColor="#fff"
+                android:textSize="@dimen/text_regular_3x"
                 android:maxLines="1"
                 android:paddingHorizontal="@dimen/margin_medium_2"
                 android:text="@string/playback_message" />
@@ -57,7 +55,7 @@
                 android:layout_toEndOf="@id/ivPlaybackImage"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:textColor="#fff"
+                android:textColor="@color/textColorTertray"
                 android:paddingHorizontal="@dimen/margin_medium_2"
                 android:text="@string/tv_playback_description" />
             <include

@@ -61,39 +61,11 @@
             android:layout_centerInParent="true"
             android:paddingLeft="@dimen/margin_medium_3"
             android:src="@drawable/ic_baseline_cloud_download_24" />
-        <ProgressBar
-            android:id="@+id/pbPodCast"
-            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+        <include
+            layout="@layout/layout_time_left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:progress="80"
-            android:max="100"
-            android:layout_toStartOf="@id/tvPodCastTimeLeft"
-            android:progressBackgroundTint="#000"
-            android:progressTint="@color/progressBarColor"
-            android:layout_below="@id/tvPodCastTitle"
-            android:layout_alignParentStart="true"
-            android:paddingTop="@dimen/margin_medium"
-            android:paddingBottom="@dimen/margin_medium"
-            android:paddingRight="@dimen/margin_medium"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvPodCastTimeLeft"
-            android:layout_below="@id/tvPodCastTitle"
-            android:layout_alignParentEnd="true"
-            android:text="1h left"
-            android:paddingTop="@dimen/margin_small"
-            android:gravity="center"
-            android:layout_alignBottom="@id/pbPodCast"
-            android:textColor="@color/textColorTertray"
-            android:textSize="@dimen/text_small"
-            android:paddingLeft="@dimen/margin_medium"
-
-
-            />
+            android:layout_below="@id/tvPodCastTitle"/>
 
 
 

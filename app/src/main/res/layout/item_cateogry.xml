@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.theintsuhtwe.mmpodcasts.views.components.RoundCornerImageView
+        android:id="@+id/ivCategoryTypeImage"
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:paddingHorizontal="@dimen/margin_medium"
+        android:padding="@dimen/margin_medium"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder"
+        app:cornerRadius="@dimen/margin_large" />
+    <TextView
+        android:id="@+id/tvCategoryTypeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Art &amp; Desing"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingVertical="@dimen/margin_medium_2"
+        android:layout_below="@id/ivCategoryImage"
+        android:textSize="@dimen/text_regular_2x"
+        android:textColor="@color/textColor"
+        android:textStyle="bold"
+        />
+
+</LinearLayout>

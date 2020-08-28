@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="@dimen/margin_large"
+        app:cardElevation="@dimen/margin_small"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivPlaybackImage"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/placeholder" />
+
+            <TextView
+                android:id="@+id/tvPlaybackTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/ivPlaybackImage"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/ivPlaybackImage"
+                android:ellipsize="end"
+                android:textColor="#fff"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/margin_medium_2"
+                android:text="@string/playback_message" />
+            <TextView
+                android:id="@+id/tvPlaybackDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/tvPlaybackTitle"
+                android:layout_below="@id/tvPlaybackTitle"
+              android:paddingTop="@dimen/margin_small"
+                android:layout_toEndOf="@id/ivPlaybackImage"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="#fff"
+                android:paddingHorizontal="@dimen/margin_medium_2"
+                android:text="@string/tv_playback_description" />
+            <include
+                layout="@layout/layout_time_left"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/tvPlaybackTitle"
+                android:layout_marginHorizontal="@dimen/margin_medium_2"
+                android:layout_below="@id/tvPlaybackDescription"/>
+
+            <include
+                layout="@layout/layout_playback_forward"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivPlaybackImage"
+                android:layout_alignStart="@id/ivPlaybackImage"
+                android:layout_marginHorizontal="@dimen/margin_medium_2"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="27dp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</RelativeLayout>

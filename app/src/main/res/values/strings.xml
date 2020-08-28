@@ -4,4 +4,10 @@
     <string name="empty_message">It looks like you aren\'t enrolled in any podcasts., but it\'s easy to get started.</string>
     <string name="btn_reload">Reload</string>
     <string name="btn_empty_find">FIND SOMETHING NEW</string>
+    <string name="tv_description">Take your career to the next level by showing your prospective clients just how awesome your are by making your personal website with a personalized domain name. Having a personalized domain name will make you staand out of the crowd and let your audience and clients recognize your brand. So, whether your decide on yourname me. or use a well-known alias, like bingbong.me, ME domain is uniquely positoned to help you create a captivating online persona that\'s a direct relection of</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="playback_message">Women n Tech PodCast, hosted by Espress Devora</string>
+    <string name="tv_playback_description">The # womenintech Show is a hosted by Espree Devora</string>
+    <string name="description">Having a personalized domain name will make you stand out of the crowd and let your auidence and clients recognize your brand. So, whether you decide on</string>
 </resources>

@@ -55,6 +55,9 @@ dependencies {
     implementation rootProject.ext.libraries.rxJava
     implementation rootProject.ext.libraries.glide
     implementation rootProject.ext.libraries.imageSlider
+    implementation rootProject.ext.libraries.core
+    implementation rootProject.ext.libraries.ui
+    implementation rootProject.ext.libraries.dash
 
 
     kapt "androidx.room:room-compiler:2.2.1"

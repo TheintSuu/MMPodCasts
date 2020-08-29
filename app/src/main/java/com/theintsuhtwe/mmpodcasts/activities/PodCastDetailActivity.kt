@@ -70,15 +70,22 @@ class PodCastDetailActivity : BaseActivity() {
 
      fun audioPlay(pos : Int){
          mediaPlayer = MediaPlayer.create(this, default[pos])
-         pbPodCast.max = mediaPlayer.duration
-         //tvMaxTime.setText(milliSecondToString(pbPodCast.max))
-         tvTimeLong.setText(milliSecondToString(mediaPlayer.currentPosition))
-         pbPodCast.progress = mediaPlayer.currentPosition
 
 
-         mediaPlayer.start()
-         var updateProgressBarThread = UpdateProgressBarThread()
-         handler.postDelayed(updateProgressBarThread, 50)
+         if(mediaPlayer.isPlaying){
+             btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_play_circle_outline_24))
+             mediaPlayer.pause()
+         }else{
+             pbPodCast.max = mediaPlayer.duration
+             //tvMaxTime.setText(milliSecondToString(pbPodCast.max))
+             tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer.currentPosition))
+             pbPodCast.progress = mediaPlayer.currentPosition
+
+             btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_circle_outline_24))
+             mediaPlayer.start()
+             var updateProgressBarThread = UpdateProgressBarThread()
+             handler.postDelayed(updateProgressBarThread, 50)
+         }
      }
 
 //    fun audioNext(){
@@ -90,10 +97,12 @@ class PodCastDetailActivity : BaseActivity() {
     inner class UpdateProgressBarThread : Runnable{
         override fun run() {
            var currentTime = mediaPlayer.currentPosition
-            tvTimeLong.setText(milliSecondToString(currentTime))
+            tvPodCastTimeLeft.setText(milliSecondToString(currentTime))
             pbPodCast.progress = currentTime
             if(currentTime != mediaPlayer.duration)  handler.postDelayed(this, 50)
         }
 
     }
 }
+
+

@@ -9,6 +9,7 @@ import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.fragments.DownloadFragment
 import com.theintsuhtwe.mmpodcasts.fragments.HomeFragment
 import com.theintsuhtwe.mmpodcasts.fragments.SearchFragment
+import com.theintsuhtwe.mmpodcasts.utils.FRAGMENT_Home
 import com.theintsuhtwe.shared.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -50,7 +51,10 @@ class MainActivity : BaseActivity() {
     }
 
     fun callFragment(fragment : Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.container, fragment).commit()
+        supportFragmentManager
+            .beginTransaction().
+            replace(R.id.container, fragment)
+            .addToBackStack(FRAGMENT_Home).commit()
     }
 
 }

@@ -26,7 +26,7 @@ def verySensitiveDP = loadSensitiveData()
 
 
 ext{
-    sensitiveAPIKEY = verySensitiveDP.getProperty('API_KEY')
+    sensitiveAPIKEY = verySensitiveDP.getProperty('X_ListenAPI_Key')
 }
 
 def loadSensitiveData(){

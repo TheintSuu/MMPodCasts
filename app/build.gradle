@@ -13,7 +13,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField 'String', 'API_KEY', "\"${sensitiveAPIKEY}\""
+        buildConfigField 'String', 'X_ListenAPI_Key', "\"${sensitiveAPIKEY}\""
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

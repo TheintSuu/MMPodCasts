@@ -51,20 +51,19 @@
             android:textColor="@color/textColor"
             android:textSize="@dimen/text_regular_3x" />
 
-        <ImageView
-            android:id="@+id/ivDownload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvPodCasCategory"
-            android:layout_alignTop="@id/tvPodCastTitle"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/margin_medium_3"
-            android:src="@drawable/ic_baseline_cloud_download_24" />
-        <include
-            layout="@layout/layout_time_left"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+        <TextView
+        android:id="@+id/tvPodCastHighLight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:paddingRight="@dimen/margin_medium"
+        android:textStyle="bold"
+        android:text="The # womenintech Show is a show that express women's creativity"
+        android:textColor="@color/textColorTertray"
+        android:textSize="@dimen/text_regular"
             android:layout_below="@id/tvPodCastTitle"/>
 
 

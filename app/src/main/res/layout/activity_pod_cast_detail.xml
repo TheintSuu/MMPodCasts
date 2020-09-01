@@ -98,10 +98,12 @@
                 android:textSize="@dimen/text_regular_2x" />
             <include
                 android:id="@+id/playbackCardLayout"
-                layout="@layout/layout_playback_view"
+                layout="@layout/mini_play_back_layout"
                 android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tvDetailDescription" />
+                android:layout_below="@id/tvDetailDescription"
+                 />
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLayout"
+        android:layout_width="match_parent"
+        android:layout_height="135dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="@dimen/margin_large"
+        app:cardElevation="@dimen/margin_small"
+        tools:ignore="MissingConstraints">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+>
+        <TextView
+            android:id="@+id/tvPodCastTimeStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/margin_medium_2"
+            android:paddingVertical="@dimen/margin_medium_2"
+            android:text="05:45"
+            android:textColor="@color/textColorTertray"
+            android:textSize="@dimen/text_small"
+
+
+            />
+
+
+        <include
+            android:id="@+id/layout_time"
+            layout="@layout/layout_time_left"
+            android:layout_width="match_parent"
+            android:layout_toEndOf="@id/tvPodCastTimeStart"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/tvPlaybackTitle"
+            android:layout_marginHorizontal="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_medium" />
+
+
+
+        <include
+            layout="@layout/layout_playback_forward"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvPodCastTimeStart"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/margin_medium_2"
+            android:layout_marginBottom="@dimen/margin_medium_2" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

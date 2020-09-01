@@ -23,7 +23,7 @@
         android:id="@+id/btnReplayTime"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="54dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -33,7 +33,7 @@
         android:id="@+id/btnPlay"
         android:layout_width="58dp"
         android:layout_height="58dp"
-        android:layout_marginStart="139dp"
+        android:layout_marginStart="149dp"
         android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -41,26 +41,25 @@
 
     <ImageView
         android:id="@+id/btnReplayTime2"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toEndOf="@+id/btnPlay"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="242dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_refresh_24" />
 
     <TextView
         android:id="@+id/imageView9"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="20dp"
+        android:layout_width="35dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="320dp"
+        android:layout_marginTop="18dp"
         android:text="Zz"
-        android:textAlignment="viewEnd"
         android:textColor="#fff"
         android:textSize="@dimen/text_regular_3x"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -82,11 +81,12 @@
         android:id="@+id/tv30Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="18dp"
+        android:layout_marginStart="16dp"
         android:text="30"
         android:textColor="#fff"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/btnReplayTime2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnReplayTime2"
+        app:layout_constraintTop_toTopOf="@+id/btnReplayTime2"
+        app:layout_constraintVertical_bias="0.461" />
 </androidx.constraintlayout.widget.ConstraintLayout>

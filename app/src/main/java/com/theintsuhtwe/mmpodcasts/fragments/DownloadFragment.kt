@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
+import com.theintsuhtwe.mmpodcasts.adapters.DownloadPodCastAdapter
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
 import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate
 import kotlinx.android.synthetic.main.fragment_download.*
@@ -23,7 +24,7 @@ class DownloadFragment : Fragment(), PodCastItemDelegate{
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var mMainAdapter: PodCastAdapter
+    lateinit var mMainAdapter: DownloadPodCastAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,7 @@ class DownloadFragment : Fragment(), PodCastItemDelegate{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMainAdapter = PodCastAdapter(this)
+        mMainAdapter = DownloadPodCastAdapter(this)
         val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         mainRecyler.layoutManager = linearLayoutManager
         mainRecyler.adapter =  mMainAdapter

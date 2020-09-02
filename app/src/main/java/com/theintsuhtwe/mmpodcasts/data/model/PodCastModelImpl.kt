@@ -12,16 +12,19 @@ object PodCastModelImpl : PodCastModel, BaseModel() {
 
     @SuppressLint("CheckResult")
     override fun getPodCastFromApiSaveToDB(onSuccess: () -> Unit, onError: (String) -> Unit) {
-       mPodCastApi
-           .getRandomPodCast()
-            .map { it }
+        mPodCastApi
+            .getUpNextPodCastList(Play_List_ID_KEY)
+            .map { it.data.toMutableList() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
-                mPodCastDB.podCastDao().insertpodcast(it)
+                it.forEach {
+                    mPodCastDB.podCastDao().insertpodcast(it.data)
+                }
             },{
                 onError(it.localizedMessage ?: it.localizedMessage)
             })
+
     }
 
     override fun getAllPodCastList(onError: (String) -> Unit): LiveData<List<PodCastVO>> {
@@ -33,17 +36,22 @@ object PodCastModelImpl : PodCastModel, BaseModel() {
     }
 
     @SuppressLint("CheckResult")
-    override fun getRandomPodCastFromApiSaveToDB(onSuccess: () -> Unit, onError: (String) -> Unit) {
+    override fun getRandomPodCastFromApiSaveToDB(onSuccess: () -> PodCastVO, onError: (String) -> Unit):  {
         mPodCastApi
-            .getUpNextPodCastList(Play_List_ID_KEY)
-            .map { it.data.toMutableList() }
+            .getRandomPodCast()
+            .map { it }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
-                mPodCastDB.podCastDao().insertAllpodcast(it)
+                //onSuccess(it)
+                mPodCastDB.podCastDao().insertpodcast(it)
             },{
                 onError(it.localizedMessage ?: it.localizedMessage)
             })
+    }
+
+    private fun onSuccess(it: PodCastVO?) : PodCastVO? {
+
     }
 
 

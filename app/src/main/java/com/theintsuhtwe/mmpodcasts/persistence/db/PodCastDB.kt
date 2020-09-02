@@ -9,7 +9,7 @@ import com.theintsuhtwe.mmpodcasts.data.vos.GenresVO
 import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
 import com.theintsuhtwe.mmpodcasts.persistence.daos.PodCastDao
 
-@Database(entities = [PodCastVO::class, GenresVO::class], version = 1, exportSchema = false)
+@Database(entities = [PodCastVO::class, GenresVO::class], version = 3, exportSchema = false)
 abstract class PodCastDB : RoomDatabase() {
     companion object {
         val DB_NAME = "PADC_X_PodCast.DB"

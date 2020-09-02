@@ -8,7 +8,9 @@ interface MainView : BaseView {
 
     fun displayPodCastsList(podCastsList : List<PodCastVO>)
 
-    fun navigateToPodCastDetails(podCastId: Int)
+    fun navigateToPodCastDetails(podCastId: String)
+
+    fun navigateToPlayAudio(podCastId: String)
 
 
 }

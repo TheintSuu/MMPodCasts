@@ -15,30 +15,36 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
     }
 
     override fun onRandomUIReady(lifeCycleOwner: LifecycleOwner) {
-        mPodCastModel.getRandomPodCast(onError = {
-        }).observe(lifeCycleOwner, Observer {
-            mView?.displayRandomPodCast(it)
-        })
+
 
         mPodCastModel.getRandomPodCastFromApiSaveToDB(
             onSuccess = {
-
+                mView?.displayRandomPodCast(it)
             },
             onError = {
 
             }
         )
 
+        mPodCastModel.getRandomPodCast(onError = {
+        }).observe(lifeCycleOwner, Observer {
+
+        })
+
 
     }
 
-    override fun onTabSelected(lifeCycleOwner: LifecycleOwner, title: String) {
-
+    override fun onTabAudioPlay(podcastId: String) {
+        mView?.navigateToPlayAudio(podcastId)
     }
 
-    override fun onTapPodCastItem(value: Int) {
+
+
+    override fun onTapPodCastItem(value: String) {
         mView?.navigateToPodCastDetails(value)
     }
+
+
 
     private fun requestAllPodCast(lifeCycleOwner: LifecycleOwner) {
 

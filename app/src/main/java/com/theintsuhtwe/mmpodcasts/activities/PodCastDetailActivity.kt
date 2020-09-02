@@ -25,7 +25,7 @@ class PodCastDetailActivity : BaseActivity() {
 
         const val NEWS_ID_EXTRA = "PodCasts Id Extra"
 
-        fun newItent(context: Context, newsId : Int): Intent {
+        fun newItent(context: Context, newsId : String): Intent {
             val intent =  Intent(context,  PodCastDetailActivity::class.java)
             intent.putExtra(NEWS_ID_EXTRA, newsId)
             return intent

@@ -11,5 +11,5 @@ interface PodCastModel {
 
     fun getRandomPodCast(onError: (String) -> Unit) : LiveData<PodCastVO>
 
-    fun getRandomPodCastFromApiSaveToDB(onSuccess:()->Unit,onError : (String)->Unit)
+    fun getRandomPodCastFromApiSaveToDB(onSuccess:()-> PodCastVO,onError : (String)->Unit)
 }

@@ -12,6 +12,6 @@ interface MainPresenter : PodCastItemDelegate,
 
     fun onRandomUIReady(lifeCycleOwner: LifecycleOwner)
 
-    fun onTabSelected(lifeCycleOwner: LifecycleOwner, title : String)
+    fun onTabAudioPlay( podcastId : String)
 
 }

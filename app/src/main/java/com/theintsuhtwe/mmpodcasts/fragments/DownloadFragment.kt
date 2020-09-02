@@ -64,7 +64,8 @@ class DownloadFragment : Fragment(), PodCastItemDelegate{
             }
     }
 
-    override fun onTapPodCastItem(value: Int) {
-        startActivity(PodCastDetailActivity.newItent(activity!!, 0))
+
+    override fun onTapPodCastItem(value: String) {
+       // startActivity(PodCastDetailActivity.newItent(activity!!, ))
     }
 }

@@ -2,6 +2,7 @@ package com.theintsuhtwe.mmpodcasts.data.model
 
 import android.content.Context
 import android.text.TextUtils
+import com.google.gson.GsonBuilder
 import com.theintsuhtwe.mmpodcasts.BuildConfig
 import com.theintsuhtwe.mmpodcasts.network.response.PodCastApi
 import com.theintsuhtwe.mmpodcasts.persistence.db.PodCastDB
@@ -13,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+
 
 abstract class BaseModel {
 
@@ -27,23 +29,31 @@ abstract class BaseModel {
             .addInterceptor(object : Interceptor {
             override fun intercept(chain: Interceptor.Chain): Response {
 
+
+                val apiKey = BuildConfig.X_ListenAPI_Key
                 val request = chain
                     .request()
-                    .newBuilder()
 
-               val apiKey = BuildConfig.X_ListenAPI_Key.toString()
-                if (!TextUtils.isEmpty(apiKey)){
-                    request.addHeader("Headers", "X-ListenAPI-Key $apiKey")
-                }
+                    .newBuilder()
+                    .addHeader("X-ListenAPI-Key", apiKey)
+
+//
+//                if (!TextUtils.isEmpty(apiKey)){
+//                    request.addHeader("Headers", "X-ListenAPI-Key $apiKey")
+//                }
                 return chain.proceed(request.build())
             }
         })
             .build()
 
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(mOkHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 

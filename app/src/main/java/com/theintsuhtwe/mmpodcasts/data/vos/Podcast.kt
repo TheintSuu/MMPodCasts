@@ -1,7 +1,11 @@
 package com.theintsuhtwe.mmpodcasts.data.vos
 
+import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.ExtraTypeConverters
+import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.LookinForTypeConverters
 
+@TypeConverters(ExtraTypeConverters::class , LookinForTypeConverters::class)
 data class Podcast(
     @SerializedName("country")  val country: String,
     @SerializedName("description")  val description: String,

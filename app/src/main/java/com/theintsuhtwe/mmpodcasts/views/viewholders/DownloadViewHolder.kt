@@ -8,7 +8,7 @@ class DownloadViewHolder (itemView : View, delegate : PodCastItemDelegate) : Rec
     val mDelegate = delegate
     init{
         itemView.setOnClickListener {
-            mDelegate.onTapPodCastItem(it.id)
+            //mDelegate.onTapPodCastItem(it.id)
 
         }
     }

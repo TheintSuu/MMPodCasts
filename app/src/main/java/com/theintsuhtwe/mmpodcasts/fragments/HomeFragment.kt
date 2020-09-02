@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
@@ -14,8 +15,12 @@ import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
+import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
+import com.theintsuhtwe.mmpodcasts.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_download.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.layout_playback_view.*
+import kotlinx.android.synthetic.main.layout_time_left.*
 import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate as PodCastItemDelegate1
 
 private const val ARG_PARAM1 = "param1"
@@ -55,11 +60,15 @@ class HomeFragment : Fragment(), MainView {
 
         mPresenter.onUiReady(this)
 
+        mPresenter.onRandomUIReady(this)
+
+
         return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        setUpRecyclerView()
 
     }
 
@@ -75,9 +84,6 @@ class HomeFragment : Fragment(), MainView {
             }
     }
 
-    override fun onTapPodCastItem(value: Int) {
-        startActivity(PodCastDetailActivity.newItent(activity!!, 0))
-    }
 
 
     private fun setUpPresenter(){
@@ -94,6 +100,16 @@ class HomeFragment : Fragment(), MainView {
     }
 
     override fun displayRandomPodCast(podCast: PodCastVO) {
+        if(podCast != null && podCast.explicit_content!= null){
+            tvPlaybackHomeDescription.text = podCast.description
+            tvPlaybackDescription.text= podCast.description
+            tvPlaybackTitle.text = podCast.title
+            tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length_sec)
+            this.view?.let { loadImage(it, podCast.image, ivPlaybackImage ) }
+        }
+
+
+
 
     }
 
@@ -101,7 +117,13 @@ class HomeFragment : Fragment(), MainView {
        mMainAdapter.setData(podCastsList.toMutableList())
     }
 
-    override fun navigateToPodCastDetails(podCastId: Int) {
-        TODO("Not yet implemented")
+    override fun navigateToPodCastDetails(podCastId: String) {
+        startActivity(PodCastDetailActivity.newItent(activity!!, podCastId))
     }
+
+    override fun navigateToPlayAudio(podCastId: String) {
+        startActivity(PodCastDetailActivity.newItent(activity!!, podCastId))
+    }
+
+
 }

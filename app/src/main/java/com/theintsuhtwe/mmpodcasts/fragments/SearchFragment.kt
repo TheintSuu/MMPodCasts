@@ -61,7 +61,9 @@ class SearchFragment : Fragment(), PodCastItemDelegate {
             }
     }
 
-    override fun onTapPodCastItem(value: Int) {
+
+
+    override fun onTapPodCastItem(value: String) {
 
     }
 }

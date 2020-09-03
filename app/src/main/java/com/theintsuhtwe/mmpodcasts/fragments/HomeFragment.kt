@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
@@ -17,11 +16,9 @@ import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
 import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
 import com.theintsuhtwe.mmpodcasts.utils.loadImage
-import kotlinx.android.synthetic.main.fragment_download.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.layout_playback_view.*
+import kotlinx.android.synthetic.main.layout_playback_control_view.*
 import kotlinx.android.synthetic.main.layout_time_left.*
-import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate as PodCastItemDelegate1
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -105,7 +102,7 @@ class HomeFragment : Fragment(), MainView {
             tvPlaybackDescription.text= podCast.description
             tvPlaybackTitle.text = podCast.title
             tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length_sec)
-            this.view?.let { loadImage(it, podCast.image, ivPlaybackImage ) }
+            activity?.let { loadImage(it, podCast.image, exo_rev ) }
         }
 
 

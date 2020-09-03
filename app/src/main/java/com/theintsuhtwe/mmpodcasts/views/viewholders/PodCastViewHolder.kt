@@ -1,5 +1,6 @@
 package com.theintsuhtwe.mmpodcasts.views.viewholders
 
+import android.app.Activity
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
@@ -30,7 +31,8 @@ class PodCastViewHolder(itemView : View, delegate : PodCastItemDelegate) : BaseV
         mData = data
 
 
-        loadImage(itemView,
+        loadImage(
+            itemView.context as Activity,
         data.image,
         itemView.ivPodcastImage)
 

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.theintsuhtwe.mmpodcasts.R
-import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.DownloadPodCastAdapter
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
 import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate

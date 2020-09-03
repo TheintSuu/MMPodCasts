@@ -11,7 +11,7 @@ interface PodCastDao {
     fun getAllpodcast(): LiveData<List<PodCastVO>>
 
     @Query("SELECT * FROM podcast WHERE id = :noteId")
-    fun getpodcastById(noteId: Int) : LiveData<PodCastVO>
+    fun getpodcastById(noteId: String) : LiveData<PodCastVO>
 
     @Query("DELETE FROM podcast")
     fun deleteAll()

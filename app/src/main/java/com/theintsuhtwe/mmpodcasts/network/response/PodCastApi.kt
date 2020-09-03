@@ -25,7 +25,7 @@ interface PodCastApi {
 
         @GET("episodes/:id")
         fun getPodCastDetailById(@Query(Play_List_ID) id : String)
-                : Observable<GetAllPodCastResponse>
+                : Observable<PodCastVO>
 
 
 }

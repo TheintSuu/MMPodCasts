@@ -36,7 +36,7 @@ object PodCastModelImpl : PodCastModel, BaseModel() {
     }
 
     @SuppressLint("CheckResult")
-    override fun getRandomPodCastFromApiSaveToDB(onSuccess: () -> PodCastVO, onError: (String) -> Unit):  {
+    override fun getRandomPodCastFromApiSaveToDB(onSuccess: () -> Unit, onError: (String) -> Unit) {
         mPodCastApi
             .getRandomPodCast()
             .map { it }
@@ -44,15 +44,14 @@ object PodCastModelImpl : PodCastModel, BaseModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
                 //onSuccess(it)
+             //   onSuccess(it)
                 mPodCastDB.podCastDao().insertpodcast(it)
             },{
                 onError(it.localizedMessage ?: it.localizedMessage)
             })
     }
 
-    private fun onSuccess(it: PodCastVO?) : PodCastVO? {
 
-    }
 
 
 }

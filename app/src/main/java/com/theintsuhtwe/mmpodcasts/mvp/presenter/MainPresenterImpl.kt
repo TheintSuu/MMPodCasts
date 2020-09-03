@@ -19,7 +19,7 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 
         mPodCastModel.getRandomPodCastFromApiSaveToDB(
             onSuccess = {
-                mView?.displayRandomPodCast(it)
+
             },
             onError = {
 
@@ -28,7 +28,7 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 
         mPodCastModel.getRandomPodCast(onError = {
         }).observe(lifeCycleOwner, Observer {
-
+            mView?.displayRandomPodCast(it)
         })
 
 

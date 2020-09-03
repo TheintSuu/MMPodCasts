@@ -12,7 +12,7 @@
             android:background="#CC000000"
             style="@style/ExoMediaButton.Play"/>
 
-        <ImageButton android:id="@id/exo_pause"
+        <ImageButton android:id="@id/btnPlay"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"

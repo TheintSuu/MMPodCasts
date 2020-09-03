@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/btnReplayTime"
+        android:id="@+id/btnRew"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:layout_marginStart="64dp"
@@ -40,7 +40,7 @@
         app:srcCompat="@drawable/ic_baseline_pause_circle_outline_24" />
 
     <ImageView
-        android:id="@+id/btnReplayTime2"
+        android:id="@+id/btnForward"
         android:layout_width="46dp"
         android:layout_height="46dp"
         android:layout_marginStart="242dp"
@@ -73,8 +73,8 @@
         android:textColor="#fff"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnReplayTime"
-        app:layout_constraintTop_toTopOf="@+id/btnReplayTime"
+        app:layout_constraintEnd_toEndOf="@+id/btnRew"
+        app:layout_constraintTop_toTopOf="@+id/btnRew"
         app:layout_constraintVertical_bias="0.384" />
 
     <TextView
@@ -86,7 +86,7 @@
         android:textColor="#fff"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnReplayTime2"
-        app:layout_constraintTop_toTopOf="@+id/btnReplayTime2"
+        app:layout_constraintStart_toStartOf="@+id/btnForward"
+        app:layout_constraintTop_toTopOf="@+id/btnForward"
         app:layout_constraintVertical_bias="0.461" />
 </androidx.constraintlayout.widget.ConstraintLayout>

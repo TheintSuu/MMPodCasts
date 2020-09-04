@@ -3,12 +3,14 @@ package com.theintsuhtwe.mmpodcasts.mvp.presenter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.data.model.PodCastModelImpl
+import com.theintsuhtwe.mmpodcasts.data.model.RecommendationModelImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
 
 class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 
     var mPodCastModel = PodCastModelImpl
+    var mPodCastRecModel = RecommendationModelImpl
 
     override fun onUiReady(lifeCycleOwner: LifecycleOwner) {
         requestAllPodCast(lifeCycleOwner)
@@ -48,19 +50,34 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 
     private fun requestAllPodCast(lifeCycleOwner: LifecycleOwner) {
 
-        mPodCastModel.getAllPodCastList(onError = {
+//        mPodCastModel.getAllPodCastList(onError = {
+//        }).observe(lifeCycleOwner, Observer {
+//            mView?.displayPodCastsList(it)
+//        })
+//
+//
+//        mPodCastModel.getPodCastFromApiSaveToDB(
+//                onSuccess = {
+//
+//                },
+//        onError = {
+//
+//        }
+//        )
+
+        mPodCastRecModel.getAllPodCastList(onError = {
         }).observe(lifeCycleOwner, Observer {
             mView?.displayPodCastsList(it)
         })
 
 
-        mPodCastModel.getPodCastFromApiSaveToDB(
-                onSuccess = {
+        mPodCastRecModel.getPodCastFromApiSaveToDB(
+            onSuccess = {
 
-                },
-        onError = {
+            },
+            onError = {
 
-        }
+            }
         )
 
     }

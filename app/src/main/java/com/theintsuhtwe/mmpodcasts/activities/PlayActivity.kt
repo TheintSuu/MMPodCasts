@@ -29,6 +29,7 @@ class PlayActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.exo_player)
+
         playerView = findViewById<PlayerView>(R.id.video_view)
     }
 

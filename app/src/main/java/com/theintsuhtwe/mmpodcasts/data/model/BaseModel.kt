@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder
 import com.theintsuhtwe.mmpodcasts.BuildConfig
 import com.theintsuhtwe.mmpodcasts.network.response.PodCastApi
 import com.theintsuhtwe.mmpodcasts.persistence.db.PodCastDB
+import com.theintsuhtwe.mmpodcasts.utils.BASE_TEST_URL
 import com.theintsuhtwe.mmpodcasts.utils.BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -19,6 +20,8 @@ import java.util.concurrent.TimeUnit
 abstract class BaseModel {
 
     protected var mPodCastApi: PodCastApi
+
+    protected lateinit var mPodCastTestApi: PodCastApi
 
     protected lateinit var mPodCastDB: PodCastDB
     init {
@@ -46,6 +49,32 @@ abstract class BaseModel {
         })
             .build()
 
+
+
+        val mOkHttpTestClient = OkHttpClient.Builder()
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .writeTimeout(15, TimeUnit.SECONDS)
+            .addInterceptor(object : Interceptor {
+                override fun intercept(chain: Interceptor.Chain): Response {
+
+
+                    val apiKey = "c77eca3497mshe91c827502a5a8bp16aecfjsn5a4b9bde0899"
+                    val request = chain
+                        .request()
+
+                        .newBuilder()
+                        .addHeader("X-RapidAPI-Key", apiKey)
+
+//
+//                if (!TextUtils.isEmpty(apiKey)){
+//                    request.addHeader("Headers", "X-ListenAPI-Key $apiKey")
+//                }
+                    return chain.proceed(request.build())
+                }
+            })
+            .build()
+
         val gson = GsonBuilder()
             .setLenient()
             .create()
@@ -57,7 +86,16 @@ abstract class BaseModel {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
 
+
+        val retrofitTest = Retrofit.Builder()
+            .baseUrl(BASE_TEST_URL)
+            .client(mOkHttpTestClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+
         mPodCastApi = retrofit.create(PodCastApi::class.java)
+        mPodCastTestApi = retrofitTest.create(PodCastApi::class.java)
 
     }
 

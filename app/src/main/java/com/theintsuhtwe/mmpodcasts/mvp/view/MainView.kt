@@ -1,12 +1,15 @@
 package com.theintsuhtwe.mmpodcasts.mvp.view
 
-import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
+import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.shared.mvp.BaseView
 
 interface MainView : BaseView {
-    fun displayRandomPodCast(podCast : PodCastVO)
+    fun displayRandomPodCast(podCast : EpisodeVO)
 
-    fun displayPodCastsList(podCastsList : List<PodCastVO>)
+    //fun displayPodCastsList(podCastsList : List<PlayListItemVO>)
+
+    fun displayPodCastsList(podCastsList : List<EpisodeVO>)
 
     fun navigateToPodCastDetails(podCastId: String)
 

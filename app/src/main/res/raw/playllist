@@ -1,0 +1,43 @@
+{
+  "total": 3,
+  "has_next": false,
+  "playlists": [
+    {
+      "id": "m1pe7z60bsw",
+      "name": "Podcasts about podcasting",
+      "image": "https://cdn-images-1.listennotes.com/playlist/image/6907e8ff6b6c45df94cc059753f369cc.JPEG",
+      "thumbnail": "https://d3sv2eduhewoas.cloudfront.net/playlist/image/48477deae02649d7ab9d3f1b3966af38.JPEG",
+      "visibility": "public",
+      "description": "A curated playlist of podcasts by Wenbin Fang.",
+      "episode_count": 31,
+      "podcast_count": 2,
+      "listennotes_url": "https://www.listennotes.com/listen/podcasts-about-podcasting-m1pe7z60bsw/?display=episode"
+    },
+    {
+      "id": "kr3-ta28cJu",
+      "name": "Wenbin Fang's Podcast Playlist",
+      "image": "https://cdn-images-1.listennotes.com/playlist/image/42ab5b0d649d4fcea68249127f71f2b5.JPEG",
+      "thumbnail": "https://cdn-images-1.listennotes.com/playlist/image/42ab5b0d649d4fcea68249127f71f2b5.JPEG",
+      "visibility": "public",
+      "description": "Wenbin Fang’s master playlist. Just listen to individual episodes, rather than subscribing to tons of podcasts. How I listen to podcasts: https://lnns.co/6ArPszTwvDE",
+      "episode_count": 3743,
+      "podcast_count": 72,
+      "listennotes_url": "https://www.listennotes.com/listen/wenbin-fangs-podcast-playlist-kr3-ta28cJu/?display=episode"
+    },
+    {
+      "id": "uIK85BM6EWJ",
+      "name": "There's a podcast for that",
+      "image": "https://cdn-images-1.listennotes.com/playlist/image/6e7c344a7a664320854a0677b57b3342.JPEG",
+      "thumbnail": "https://cdn-images-1.listennotes.com/playlist/image/6e7c344a7a664320854a0677b57b3342.JPEG",
+      "visibility": "public",
+      "description": "Inspired by \"There's an app for that\". Email me if you want to become a contributor of this list: hello@listennotes.com",
+      "episode_count": 0,
+      "podcast_count": 117,
+      "listennotes_url": "https://www.listennotes.com/listen/theres-a-podcast-for-that-uIK85BM6EWJ/?display=podcast"
+    }
+  ],
+  "page_number": 1,
+  "has_previous": false,
+  "next_page_number": 2,
+  "previous_page_number": 0
+}

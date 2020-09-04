@@ -11,17 +11,11 @@ import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
 import com.google.android.exoplayer2.ui.PlayerControlView
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
-import com.google.gson.JsonObject
 import com.theintsuhtwe.mmpodcasts.R
-import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
@@ -102,7 +96,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     }
 
 
-    private fun bindData(podCast : PodCastVO){
+    private fun bindData(podCast : EpisodeVO){
         loadImage(this@PodCastDetailActivity, podCast.image, ivMoviesImage)
 
         tvDetailDescription.text = podCast.description
@@ -114,7 +108,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         mPresenter.onTabAudioPlay(podCast.audio)
     }
 
-    override fun displayAllPodCastDetail(detail: PodCastVO) {
+    override fun displayAllPodCastDetail(detail: EpisodeVO) {
         bindData(detail)
     }
 

@@ -17,6 +17,8 @@ import com.theintsuhtwe.mmpodcasts.mvp.presenter.CategoryPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.CategoryView
 import kotlinx.android.synthetic.main.fragment_download.*
+import kotlinx.android.synthetic.main.fragment_download.mainRecyler
+import kotlinx.android.synthetic.main.fragment_search.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,6 +83,10 @@ class SearchFragment : Fragment(), CategoryView {
       mMainAdapter.setData(podCastsList.toMutableList())
     }
 
+    override fun displayDefaultCategory(category: GenresVO) {
+      bindData(category)
+    }
+
     override fun navigateToPodCastByCategory(categoryId: String) {
 
     }
@@ -95,5 +101,11 @@ class SearchFragment : Fragment(), CategoryView {
         val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         mainRecyler.layoutManager = linearLayoutManager
         mainRecyler.adapter =  mMainAdapter
+    }
+
+
+    private fun bindData(category : GenresVO){
+       //loadImage(activity, category.)
+        tvCategoryTitle.text = category.name
     }
 }

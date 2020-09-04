@@ -5,10 +5,12 @@ const val EMPTY_MESSAGE = "It looks like you aren't enrolled in any podcasts., b
 
 const val BASE_URL = "https://listen-api.listennotes.com/api/v2/"
 
+const val BASE_TEST_URL = "https://listennotes.p.rapidapi.com/api/v1/"
+
 
 const val GET_RANDOM_PODCAST = "just_listen"
 
-const val GET_UPNEXT_PODCAST = "/playlists/:id"
+const val GET_UPNEXT_PODCAST = "/playlists/{id}"
 
 const val GET_GENRES = "genres"
 

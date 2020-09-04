@@ -3,17 +3,17 @@ package com.theintsuhtwe.mmpodcasts.persistence.typeconverters
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.theintsuhtwe.mmpodcasts.data.vos.LookingFor
 
-class LookinForTypeConverters {
+
+class GenresTypeConverters {
     @TypeConverter
-    fun toString(commentList: LookingFor): String {
+    fun toString(commentList: List<Int>): String {
         return Gson().toJson(commentList)
     }
 
     @TypeConverter
-    fun toList(commentListJsonStr: String): LookingFor {
-        val commentListType = object : TypeToken<LookingFor>() {}.type
+    fun toCommentList(commentListJsonStr: String): List<Int> {
+        val commentListType = object : TypeToken<List<Int>>() {}.type
         return Gson().fromJson(commentListJsonStr, commentListType)
     }
 }

@@ -35,12 +35,25 @@
                 app:cornerRadius="@dimen/margin_medium" />
 
             <TextView
+                android:id="@+id/tvCategoryTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Categories"
+                android:textAlignment="center"
+                android:paddingVertical="@dimen/margin_medium_3"
+                android:layout_below="@id/ivCategoryImage"
+                android:textSize="@dimen/text_regular"
+                android:textColor="@color/textColor"
+                android:textStyle="bold"
+                />
+
+            <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Categories"
                 android:paddingVertical="@dimen/margin_medium_3"
-                android:layout_below="@id/ivCategoryImage"
+                android:layout_below="@id/tvCategoryTitle"
                 android:textSize="@dimen/text_regular_3x"
                 android:textColor="@color/textColor"
                 android:textStyle="bold"

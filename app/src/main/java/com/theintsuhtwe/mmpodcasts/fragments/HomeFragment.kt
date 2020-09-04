@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
-import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
+import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
@@ -96,12 +97,13 @@ class HomeFragment : Fragment(), MainView {
 
     }
 
-    override fun displayRandomPodCast(podCast: PodCastVO) {
+    override fun displayRandomPodCast(podCast: EpisodeVO) {
         if(podCast != null && podCast.explicit_content!= null){
             tvPlaybackHomeDescription.text = podCast.description
             tvPlaybackDescription.text= podCast.description
             tvPlaybackTitle.text = podCast.title
-            tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length_sec)
+            //tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length_sec)
+            tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length)
             activity?.let { loadImage(it, podCast.image, exo_rev ) }
         }
 
@@ -110,9 +112,13 @@ class HomeFragment : Fragment(), MainView {
 
     }
 
-    override fun displayPodCastsList(podCastsList: List<PodCastVO>) {
-       mMainAdapter.setData(podCastsList.toMutableList())
+    override fun displayPodCastsList(podCastsList: List<EpisodeVO>) {
+        mMainAdapter.setData(podCastsList.toMutableList())
     }
+
+//    override fun displayPodCastsList(podCastsList: List<PlayListItemVO>) {
+//       mMainAdapter.setData(podCastsList.toMutableList())
+//    }
 
     override fun navigateToPodCastDetails(podCastId: String) {
         startActivity(PodCastDetailActivity.newItent(activity!!, podCastId))

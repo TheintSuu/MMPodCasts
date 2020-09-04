@@ -4,10 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.data.model.GenresModelImpl
-import com.theintsuhtwe.mmpodcasts.data.vos.GenresVO
 import com.theintsuhtwe.mmpodcasts.mvp.view.CategoryView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
-import com.theintsuhtwe.shared.mvp.presenter.BasePresenter
 
 class CategoryPresenterImpl : CategoryPresenter, AbstractBasePresenter<CategoryView>() {
 
@@ -31,11 +29,15 @@ class CategoryPresenterImpl : CategoryPresenter, AbstractBasePresenter<CategoryV
         }.observe(lifecycleOwner, Observer {
             it?.let {
                 mView?.displayCategoryList(it)
+
+                //mView?.displayDefaultCategory(it.first())
             }
 
         })
         mCategoryModel.getGenresFromApiSaveToDB(
-            onSuccess = {},
+            onSuccess = {
+
+            },
             onError = {
                 Log.d("Error","hello")
             })

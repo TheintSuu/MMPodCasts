@@ -2,7 +2,8 @@ package com.theintsuhtwe.mmpodcasts.data.model
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
-import com.theintsuhtwe.mmpodcasts.data.vos.PodCastVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
+import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.mmpodcasts.utils.Play_List_ID_KEY
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,26 +19,41 @@ object PodCastModelImpl : PodCastModel, BaseModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe ({
-                it.forEach {
-                    mPodCastDB.podCastDao().insertpodcast(it.data)
-                }
+
+                    mPodCastDB.playlistDao().insertAllplaylist(it)
+
             },{
                 onError(it.localizedMessage ?: it.localizedMessage)
             })
 
+
+//        mPodCastTestApi.getAllRecommendation("deecd6ee486f4f47abe61998efc2c0c2")
+//            .map { it.data.toMutableList() }
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe ({
+//                //onSuccess(it)
+//                //   onSuccess(it)
+//                mPodCastDB.podCastDao().insertAllpodcast(it)
+//            },{
+//                onError(it.localizedMessage ?: it.localizedMessage)
+//            })
+
+
+
     }
 
-    override fun getAllPodCastList(onError: (String) -> Unit): LiveData<List<PodCastVO>> {
-        return mPodCastDB.podCastDao().getAllpodcast()
+    override fun getAllPodCastList(onError: (String) -> Unit): LiveData<List<PlayListItemVO>> {
+        return mPodCastDB.playlistDao().getAllplaylist()
     }
 
-    override fun getRandomPodCast(onError: (String) -> Unit): LiveData<PodCastVO> {
+    override fun getRandomPodCast(onError: (String) -> Unit): LiveData<EpisodeVO> {
         return mPodCastDB.podCastDao().getPodCastRandom()
     }
 
     @SuppressLint("CheckResult")
     override fun getRandomPodCastFromApiSaveToDB(onSuccess: () -> Unit, onError: (String) -> Unit) {
-        mPodCastApi
+        mPodCastTestApi
             .getRandomPodCast()
             .map { it }
             .subscribeOn(Schedulers.io())

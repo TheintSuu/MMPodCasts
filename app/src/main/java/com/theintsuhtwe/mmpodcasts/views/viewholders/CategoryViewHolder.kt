@@ -2,7 +2,6 @@ package com.theintsuhtwe.mmpodcasts.views.viewholders
 
 import android.view.View
 import com.theintsuhtwe.mmpodcasts.data.vos.GenresVO
-import com.theintsuhtwe.mmpodcasts.data.vos.PlayEpisodeListVO
 import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate
 import com.theintsuhtwe.shared.Viewholders.BaseViewHolder
 import kotlinx.android.synthetic.main.item_cateogry.view.*

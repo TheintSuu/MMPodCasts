@@ -2,7 +2,6 @@ package com.theintsuhtwe.mmpodcasts.data.model
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
-import com.theintsuhtwe.mmGenress.data.model.GenresModel
 import com.theintsuhtwe.mmpodcasts.data.vos.GenresVO
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -10,7 +9,7 @@ import io.reactivex.schedulers.Schedulers
 object GenresModelImpl : GenresModel, BaseModel(){
     @SuppressLint("CheckResult")
     override fun getGenresFromApiSaveToDB(onSuccess: () -> Unit, onError: (String) -> Unit) {
-      mPodCastApi
+      mPodCastTestApi
             .getAllGenres()
             .map { it.data.toMutableList() }
             .subscribeOn(Schedulers.io())

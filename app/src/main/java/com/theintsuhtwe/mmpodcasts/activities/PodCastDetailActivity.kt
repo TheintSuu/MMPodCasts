@@ -42,7 +42,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
             return intent
         }
     }
-    val default = intArrayOf(R.raw.somebody_to_u)
+
 
     private lateinit var mPresenter : DetailPresenter
 
@@ -51,7 +51,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     private var onTime: Int = 0
     private var playTime: Int = 0
     private var endTime: Int = 0
-    private var forwardTime: Int = 5000
+    private var forwardTime: Int = 30000
     private var backwardTime: Int = 5000
     var handler = Handler()
     private var player: SimpleExoPlayer? = null
@@ -59,6 +59,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     private var currentWindow = 0
     private var playbackPosition: Long = 0
     private var playerControlView : PlayerControlView?= null
+    var updateProgressBarThread = UpdateProgressBarThread()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,12 +105,11 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         //tvTimeLong.text = audioPlayTime(podCast.audio_length_sec)
         tvTimeLong.text = audioPlayTime(podCast.audio_length)
 
+        tvPodCastTimeStart.setText(milliSecondToString(0))
+        tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.duration))
+
         tvDetailTitle.text = podCast.title
-
-        tvPodCastTimeStart.setText(milliSecondToString( 0))
-        tvPodCastTimeLeft.setText(milliSecondToString(podCast.audio_length))
         pbPodCast.progress = 0
-
         mPresenter.onTabAudioPlay(podCast.audio)
     }
 
@@ -141,6 +141,9 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                 tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
                 tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
                 pbPodCast.progress = mediaPlayer!!.currentPosition
+                handler.postDelayed(updateProgressBarThread, 50)
+
+
             }else{
                 btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_play_circle_outline_24))
                 mediaPlayer!!.pause()
@@ -188,7 +191,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                 if(mediaPlayer!!.isPlaying && pbPodCast.progress <= endTime){
                     mediaPlayer!!.seekTo(pbPodCast.progress)
                 }
-               // pbPodCast.progress
+                // pbPodCast.progress
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {
@@ -208,7 +211,21 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         var detik = TimeUnit.MILLISECONDS.toSeconds(ms.toLong())
         val menit = TimeUnit.SECONDS.toMinutes(detik)
         detik = detik % 60
-        return "$menit : $detik"
+        if(menit<10){
+            if(detik<10){
+                return "0$menit : 0$detik"
+            }else{
+                return "0$menit : $detik"
+            }
+        }else{
+            if(detik<10){
+                return "$menit : 0$detik"
+            }else{
+                return "$menit : $detik"
+            }
+        }
+
+
     }
 
 
@@ -227,18 +244,31 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
             btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_circle_outline_24))
             mediaPlayer!!.start()
-            var updateProgressBarThread = UpdateProgressBarThread()
-            handler.postDelayed(updateProgressBarThread, 50)
+
         }
     }
 
 
     inner class UpdateProgressBarThread : Runnable{
         override fun run() {
+
+            endTime = mediaPlayer!!.duration
+
             playTime = mediaPlayer!!.currentPosition
-            tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.currentPosition))
+
+            pbPodCast.max = endTime
+
+            onTime = 1
+
+
+            tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
+            tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
             pbPodCast.progress = mediaPlayer!!.currentPosition
-            if(playTime != mediaPlayer!!.duration)  handler.postDelayed(this, 50)
+//            playTime = mediaPlayer!!.currentPosition
+//            tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.currentPosition))
+//            pbPodCast.progress = mediaPlayer!!.currentPosition
+            if( mediaPlayer!!.currentPosition != mediaPlayer!!.duration)  handler.postDelayed(this, 50)
+
         }
 
     }
@@ -250,15 +280,15 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     override fun onResume() {
         super.onResume()
         //if (Util.SDK_INT <= 23 || player == null) {
-            setUpMediaController()
-       // }
+        setUpMediaController()
+        // }
     }
 
     override fun onPause() {
         super.onPause()
-       // if (Util.SDK_INT <= 23) {
-            releasePlayer()
-       // }
+        // if (Util.SDK_INT <= 23) {
+        releasePlayer()
+        // }
     }
 
     override fun onStop() {
@@ -274,9 +304,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
     private fun releasePlayer() {
         if (mediaPlayer != null) {
-            playbackPosition = mediaPlayer!!.currentPosition.toLong()
-           // currentWindow = player!!.getCurrentWindowIndex()
-            //playWhenReady = player!!.getPlayWhenReady()
+            // playbackPosition = mediaPlayer!!.currentPosition.toLong()
             mediaPlayer!!.release()
             mediaPlayer = null
         }

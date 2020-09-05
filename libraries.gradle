@@ -9,7 +9,7 @@ ext{
     okHttpVersion = "4.1.0"
     liveDataVersion = "2.1.0"
     glideVersion = "4.10.0"
-    RoomVersion = "2.2.1"
+    RoomVersion = "2.2.5"
     RoomAnnotationVersion = "1.0.2"
     RoomLegacyVersion = "1.0.0"
     rxJavaVersion = "2.2.7"

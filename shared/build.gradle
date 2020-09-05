@@ -54,7 +54,7 @@ dependencies {
     implementation rootProject.ext.libraries.imageSlider
 
 
-    kapt "androidx.room:room-compiler:2.2.1"
+    kapt "androidx.room:room-compiler:2.2.5"
     kapt 'com.github.bumptech.glide:compiler:4.10.0'
 
 

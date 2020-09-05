@@ -9,10 +9,10 @@ import com.theintsuhtwe.mmpodcasts.data.vos.DownloadVO
 
 interface DownloadDao {
     @Query("SELECT * FROM download")
-    fun getAlldownload(): LiveData<List<DownloadVO>>
+    fun getAlldownload(): List<DownloadVO>
 
     @Query("SELECT * FROM download WHERE id = :noteId")
-    fun getdownloadById(noteId: String) : LiveData<DownloadVO>
+    fun getdownloadById(noteId: Int) : DownloadVO
 
     @Query("DELETE FROM download")
     fun deleteAll()
@@ -26,6 +26,5 @@ interface DownloadDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAlldownload(download: List<DownloadVO>)
 
-    @Query("SELECT * FROM download ORDER BY id Desc LIMIT 1")
-    fun getdownloadRandom(): LiveData<DownloadVO>
+
 }

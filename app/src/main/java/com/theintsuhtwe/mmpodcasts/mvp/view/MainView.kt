@@ -13,7 +13,7 @@ interface MainView : BaseView {
 
     fun navigateToPlayAudio(podCastId: String)
 
-    fun navigateToDownloadAudio(fileName : String, uri : String)
+    fun navigateToDownloadAudio(episodeVO: EpisodeVO)
 
 
 }

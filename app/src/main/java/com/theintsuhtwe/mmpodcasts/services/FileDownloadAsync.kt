@@ -17,6 +17,9 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.MainActivity
+import com.theintsuhtwe.mmpodcasts.data.model.DownloadModelImpl
+import com.theintsuhtwe.mmpodcasts.data.vos.DownloadVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.fragments.DownloadFragment
 import com.theintsuhtwe.mmpodcasts.utils.DOWNLOAD
 import com.theintsuhtwe.mmpodcasts.utils.FRAGMENT_Home
@@ -28,7 +31,8 @@ import java.net.URLConnection
 class FileDownloadAsync(
     private val context: Context,
     private val fileUrl: String,
-    private val fileName: String
+    private val fileName: String,
+    private val episodeVO: EpisodeVO
 ) :
     AsyncTask<Void, Void, Int>() {
     private var notificationManagerCompat: NotificationManagerCompat? = null
@@ -135,6 +139,15 @@ class FileDownloadAsync(
                     } else {
                         android.R.drawable.stat_notify_error
                     }
+
+                if(success){
+                    val downloadVO = DownloadVO(
+                        path = fileName,
+                        podcastInfo = episodeVO
+
+                    )
+                    DownloadModelImpl.insertDownloadPodCast(downloadVO)
+                }
                 notificationBuilder?.setContentTitle(fileName)
                 notificationBuilder?.setSmallIcon(resId)
                 notificationBuilder?.setOngoing(false)

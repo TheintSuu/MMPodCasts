@@ -22,6 +22,11 @@ import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
 import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
 import com.theintsuhtwe.mmpodcasts.utils.loadImage
 import com.theintsuhtwe.shared.activities.BaseActivity
+import io.reactivex.Flowable.interval
+import io.reactivex.Observable.interval
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
 import kotlinx.android.synthetic.main.activity_pod_cast_detail.*
 import kotlinx.android.synthetic.main.layout_header.*
 import kotlinx.android.synthetic.main.layout_playback_forward.*
@@ -52,14 +57,14 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     private var playTime: Int = 0
     private var endTime: Int = 0
     private var forwardTime: Int = 30000
-    private var backwardTime: Int = 5000
+    private var backwardTime: Int = 15000
     var handler = Handler()
     private var player: SimpleExoPlayer? = null
     private var playWhenReady = true
     private var currentWindow = 0
     private var playbackPosition: Long = 0
     private var playerControlView : PlayerControlView?= null
-    var updateProgressBarThread = UpdateProgressBarThread()
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,9 +73,10 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
         setUpPresenter()
 
-        setUpListener()
 
         setUpMediaController()
+
+        setUpListener()
         val podCastId = intent.getStringExtra(PodCasts_ID_EX)
 
         podCastId?.let { mPresenter.onUiReady(podCastId = it,
@@ -106,6 +112,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         tvTimeLong.text = audioPlayTime(podCast.audio_length)
 
         tvPodCastTimeStart.setText(milliSecondToString(0))
+        btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_play_circle_outline_24))
         tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.duration))
 
         tvDetailTitle.text = podCast.title
@@ -141,7 +148,27 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                 tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
                 tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
                 pbPodCast.progress = mediaPlayer!!.currentPosition
-                handler.postDelayed(updateProgressBarThread, 50)
+
+                io.reactivex.Observable.interval(1000L, TimeUnit.MILLISECONDS)
+                    .timeInterval()
+                    .subscribeOn(Schedulers.io( )).map {
+                        if(mediaPlayer!!.isPlaying){
+                            updateSeekBar()
+
+                        }
+                        return@map it
+
+                    }
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe {
+                        if( mediaPlayer!!.currentPosition != mediaPlayer!!.duration){
+                           UIUpdate()
+                        }
+                    }
+
+
+
+
 
 
             }else{
@@ -249,8 +276,10 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     }
 
 
-    inner class UpdateProgressBarThread : Runnable{
-        override fun run() {
+
+
+
+      private fun updateSeekBar() {
 
             endTime = mediaPlayer!!.duration
 
@@ -258,20 +287,16 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
             pbPodCast.max = endTime
 
-            onTime = 1
-
-
-            tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
-            tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
-            pbPodCast.progress = mediaPlayer!!.currentPosition
-//            playTime = mediaPlayer!!.currentPosition
-//            tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.currentPosition))
-//            pbPodCast.progress = mediaPlayer!!.currentPosition
-            if( mediaPlayer!!.currentPosition != mediaPlayer!!.duration)  handler.postDelayed(this, 50)
 
         }
 
+    private fun UIUpdate(){
+        tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
+        tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
+        pbPodCast.progress = mediaPlayer!!.currentPosition
     }
+
+
 
 
 

@@ -27,7 +27,7 @@ class PodCastViewHolder(itemView : View, delegate : PodCastItemDelegate) : BaseV
         itemView.btnAudioDownload
             .setOnClickListener {
                 mData?.let {
-                    delegate.onTapDownloadItem(it.title, it.audio)
+                    delegate.onTapDownloadItem(it)
                 }
             }
 

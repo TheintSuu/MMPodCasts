@@ -74,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/btn_reload"
+                android:id="@+id/btnReload"
                 android:background="@drawable/button_background"
                 android:padding="@dimen/margin_medium_2"
                 android:textStyle="bold"

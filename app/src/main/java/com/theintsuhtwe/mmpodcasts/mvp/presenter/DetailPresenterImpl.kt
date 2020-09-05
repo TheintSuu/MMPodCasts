@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.data.model.PodCastDetailModelImpl
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
 
@@ -23,9 +24,10 @@ class DetailPresenterImpl : DetailPresenter, AbstractBasePresenter<DetailView>()
 
     }
 
-    override fun onTapDownloadItem(fileName: String, uri: String) {
+    override fun onTapDownloadItem(episodeVO: EpisodeVO) {
 
     }
+
 
     private fun getAllPodCastDetail(podCastId : String, lifecycleOwner: LifecycleOwner){
 

@@ -1,10 +1,7 @@
 package com.theintsuhtwe.mmpodcasts
 
 import android.app.Application
-import com.theintsuhtwe.mmpodcasts.data.model.GenresModelImpl
-import com.theintsuhtwe.mmpodcasts.data.model.PodCastDetailModelImpl
-import com.theintsuhtwe.mmpodcasts.data.model.PodCastModelImpl
-import com.theintsuhtwe.mmpodcasts.data.model.RecommendationModelImpl
+import com.theintsuhtwe.mmpodcasts.data.model.*
 
 class  MMPodCastApp : Application() {
     override fun onCreate() {
@@ -13,6 +10,8 @@ class  MMPodCastApp : Application() {
        GenresModelImpl.initDatabase(applicationContext)
         PodCastDetailModelImpl.initDatabase(applicationContext)
         RecommendationModelImpl.initDatabase(applicationContext)
+       DownloadModelImpl.initDatabase(applicationContext)
+
 
     }
 

@@ -3,7 +3,6 @@ package com.theintsuhtwe.mmpodcasts.data.model
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
-import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.data.model.PodCastModelImpl
 import com.theintsuhtwe.mmpodcasts.data.model.RecommendationModelImpl
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
 
@@ -49,9 +50,10 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
         mView?.navigateToPodCastDetails(value)
     }
 
-    override fun onTapDownloadItem(fileName: String, uri: String) {
-        mView?.navigateToDownloadAudio(fileName, uri)
+    override fun onTapDownloadItem(episodeVO: EpisodeVO) {
+        mView?.navigateToDownloadAudio(episodeVO)
     }
+
 
 
     private fun requestAllPodCast(lifeCycleOwner: LifecycleOwner) {

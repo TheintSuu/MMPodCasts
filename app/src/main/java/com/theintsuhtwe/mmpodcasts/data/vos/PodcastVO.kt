@@ -19,11 +19,11 @@ data class PodcastVO(
     @SerializedName("id")  val id: String,
     @ColumnInfo(name = "podcast-description")
     @SerializedName("description")  val description: String,
-    //@SerializedName("listennotes_url")  val listennotes_url: String,
+
     @ColumnInfo(name ="podcast_title")
     @SerializedName("title")  val title: String
 //    @SerializedName("country")  val country: String,
-
+    //@SerializedName("listennotes_url")  val listennotes_url: String,
 //    @SerializedName("earliest_pub_date_ms")  val earliest_pub_date_ms: Long,
 //    @SerializedName("email")  val email: String,
 //    @SerializedName("explicit_content")  val explicit_content: Boolean,

@@ -1,25 +1,57 @@
 package com.theintsuhtwe.mmpodcasts.mvp.presenter
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import com.theintsuhtwe.mmpodcasts.data.model.DownloadModelImpl
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.view.DownloadView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
-import com.theintsuhtwe.shared.mvp.presenter.BasePresenter
 
-class DownloadPresenterImpl : DownloadPresenter, AbstractBasePresenter<DownloadView>() {
+class DownloadPresenterImpl:  DownloadPresenter, AbstractBasePresenter<DownloadView>() {
+
+
+    var mPodCastModel = DownloadModelImpl
+
     override fun onUiReady(lifeCycleOwner: LifecycleOwner) {
-        TODO("Not yet implemented")
+        requestAllPodCast(lifeCycleOwner)
     }
 
     override fun onTabAudioPlay(podcastId: String) {
-        TODO("Not yet implemented")
+
     }
+
 
     override fun onTapPodCastItem(value: String) {
-        TODO("Not yet implemented")
+        mView?.navigateToPodCastDetails(value)
     }
 
-    override fun onTapDownloadItem(fileName: String, uri: String) {
-        TODO("Not yet implemented")
+    override fun onTapDownloadItem(episodeVO: EpisodeVO) {
+
+    }
+
+    override fun onTapTryAgain() {
+        loadAllPodCast()
+    }
+
+
+    private fun requestAllPodCast(lifeCycleOwner: LifecycleOwner) {
+
+
+        val downloadList = mPodCastModel.getAllDownloadPodCastList(onError = {
+
+        })
+
+        mView?.displayDownloadPodCastsList(downloadList)
+
+
+    }
+
+    private fun loadAllPodCast(){
+        val downloadList = mPodCastModel.getAllDownloadPodCastList(onError = {
+
+        })
+
+        mView?.displayDownloadPodCastsList(downloadList)
     }
 
 

@@ -45,7 +45,6 @@
             android:ellipsize="end"
             android:layout_marginTop="@dimen/margin_medium"
             android:paddingRight="@dimen/margin_medium"
-            android:layout_toStartOf="@id/btnAudioDownload"
             android:textStyle="bold"
             android:text="Women n Technology Podcast, hosted by Espree Devora"
             android:textColor="@color/textColor"

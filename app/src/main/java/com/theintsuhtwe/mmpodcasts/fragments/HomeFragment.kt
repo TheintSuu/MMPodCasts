@@ -137,18 +137,18 @@ class HomeFragment : Fragment(), MainView {
         startActivity(PodCastDetailActivity.newItent(activity!!, podCastId))
     }
 
-    override fun navigateToDownloadAudio(fileName: String, uri: String) {
+    override fun navigateToDownloadAudio(episodeVO: EpisodeVO) {
         AlertDialog.Builder(activity!!)
             .setMessage("Are you sure to download?")
             .setCancelable(false)
-            .setPositiveButton(android.R.string.ok) { dialog, which -> startDownload(fileName, uri)}
+            .setPositiveButton(android.R.string.ok) { dialog, which -> startDownload(episodeVO)}
             .create().show()
 
     }
 
 
 
-    private fun startDownload(fileName: String, uri: String){
+    private fun startDownload(episodeVO: EpisodeVO){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     activity!!,
@@ -161,9 +161,9 @@ class HomeFragment : Fragment(), MainView {
                     STORAGE_PERMISSION_CODE
                 )
             } else {
-                val saveFileName = fileName
-                val filePath = uri
-                FileDownloadAsync(activity!!, filePath!!, saveFileName!!).execute()
+                val saveFileName = episodeVO.title
+                val filePath = episodeVO.audio
+                FileDownloadAsync(activity!!, filePath!!, saveFileName!!, episodeVO).execute()
             }
         }
     }

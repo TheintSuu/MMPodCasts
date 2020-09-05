@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.data.model.GenresModelImpl
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.view.CategoryView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
 
@@ -21,7 +22,7 @@ class CategoryPresenterImpl : CategoryPresenter, AbstractBasePresenter<CategoryV
        // mView?.displayCategoryList(categoryList)
     }
 
-    override fun onTapDownloadItem(fileName: String, uri: String) {
+    override fun onTapDownloadItem(episodeVO: EpisodeVO) {
 
     }
 

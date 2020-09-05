@@ -9,14 +9,11 @@ import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.PodCastTypeConvert
 
 
 @Entity(tableName = "download")
-
+@TypeConverters(PodCastTypeConverters::class)
 data class DownloadVO(
-    @PrimaryKey
-    @SerializedName("id")  val id: String,
-    @SerializedName("path")  val image: String,
-    @Embedded
-    @TypeConverters(PodCastTypeConverters::class)
-    @SerializedName("podcast_info")  val  podcastInfo : EpisodeVO?= null
-) {
 
-}
+    @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")  val id: Int = 1,
+    @SerializedName("path")  val path: String,
+    @SerializedName("podcast_info")  val  podcastInfo : EpisodeVO?= null
+)

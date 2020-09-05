@@ -101,9 +101,14 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
         tvDetailDescription.text = podCast.description
 
-        tvTimeLong.text = audioPlayTime(podCast.audio_length_sec)
+        //tvTimeLong.text = audioPlayTime(podCast.audio_length_sec)
+        tvTimeLong.text = audioPlayTime(podCast.audio_length)
 
         tvDetailTitle.text = podCast.title
+
+        tvPodCastTimeStart.setText(milliSecondToString( 0))
+        tvPodCastTimeLeft.setText(milliSecondToString(podCast.audio_length))
+        pbPodCast.progress = 0
 
         mPresenter.onTabAudioPlay(podCast.audio)
     }

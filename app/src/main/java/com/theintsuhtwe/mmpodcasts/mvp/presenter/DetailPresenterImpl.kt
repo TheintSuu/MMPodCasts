@@ -23,6 +23,10 @@ class DetailPresenterImpl : DetailPresenter, AbstractBasePresenter<DetailView>()
 
     }
 
+    override fun onTapDownloadItem(fileName: String, uri: String) {
+
+    }
+
     private fun getAllPodCastDetail(podCastId : String, lifecycleOwner: LifecycleOwner){
 
         mPodCastDetail.getPodCastDetail(podCastId){

@@ -65,6 +65,10 @@ class DownloadFragment : Fragment(), PodCastItemDelegate{
 
 
     override fun onTapPodCastItem(value: String) {
-       // startActivity(PodCastDetailActivity.newItent(activity!!, ))
+        // startActivity(PodCastDetailActivity.newItent(activity!!, ))
+    }
+
+    override fun onTapDownloadItem(fileName: String, uri: String) {
+
     }
 }

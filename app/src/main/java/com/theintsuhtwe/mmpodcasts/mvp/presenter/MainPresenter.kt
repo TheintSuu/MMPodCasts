@@ -13,4 +13,6 @@ interface MainPresenter : PodCastItemDelegate,
 
     fun onTabAudioPlay( podcastId : String)
 
+    fun onTabAudioDownload(fileName : String, uri : String)
+
 }

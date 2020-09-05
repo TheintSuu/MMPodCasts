@@ -18,5 +18,9 @@ class DownloadPresenterImpl : DownloadPresenter, AbstractBasePresenter<DownloadV
         TODO("Not yet implemented")
     }
 
+    override fun onTapDownloadItem(fileName: String, uri: String) {
+        TODO("Not yet implemented")
+    }
+
 
 }

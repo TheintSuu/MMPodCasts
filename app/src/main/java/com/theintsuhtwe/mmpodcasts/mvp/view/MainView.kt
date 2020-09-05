@@ -7,13 +7,13 @@ import com.theintsuhtwe.shared.mvp.BaseView
 interface MainView : BaseView {
     fun displayRandomPodCast(podCast : EpisodeVO)
 
-    //fun displayPodCastsList(podCastsList : List<PlayListItemVO>)
-
     fun displayPodCastsList(podCastsList : List<EpisodeVO>)
 
     fun navigateToPodCastDetails(podCastId: String)
 
     fun navigateToPlayAudio(podCastId: String)
+
+    fun navigateToDownloadAudio(fileName : String, uri : String)
 
 
 }

@@ -80,11 +80,11 @@ class SearchFragment : Fragment(), CategoryView {
 
 
     override fun displayCategoryList(podCastsList: List<GenresVO>) {
-      mMainAdapter.setData(podCastsList.toMutableList())
+        mMainAdapter.setData(podCastsList.toMutableList())
     }
 
     override fun displayDefaultCategory(category: GenresVO) {
-      bindData(category)
+        bindData(category)
     }
 
     override fun navigateToPodCastByCategory(categoryId: String) {
@@ -94,7 +94,7 @@ class SearchFragment : Fragment(), CategoryView {
     private fun setUpPresenter(){
         mPresenter = ViewModelProviders.of(this).get(CategoryPresenterImpl::class.java)
         mPresenter.initPresenter(this)
-        }
+    }
 
     private fun setUpRecycle(){
         mMainAdapter = PodCastCategoryAdapter(mPresenter)
@@ -105,7 +105,7 @@ class SearchFragment : Fragment(), CategoryView {
 
 
     private fun bindData(category : GenresVO){
-       //loadImage(activity, category.)
+        //loadImage(activity, category.)
         tvCategoryTitle.text = category.name
     }
 }

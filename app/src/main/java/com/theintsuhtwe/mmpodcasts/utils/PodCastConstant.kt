@@ -15,8 +15,10 @@ const val GET_UPNEXT_PODCAST = "/playlists/{id}"
 const val GET_GENRES = "genres"
 
 const val Play_List_ID = "id"
-
+const val DOWNLOAD = "Download"
 const val Play_List_ID_KEY = "SgTozE1ZAe3"
+
+const val STORAGE_PERMISSION_CODE  = 1000
 
 const val FRAGMENT_Home = "HomeFragment"
 const val FRAGMENT_Download = "DownloadFragment"

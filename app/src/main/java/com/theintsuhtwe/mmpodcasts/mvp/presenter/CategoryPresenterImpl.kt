@@ -21,6 +21,9 @@ class CategoryPresenterImpl : CategoryPresenter, AbstractBasePresenter<CategoryV
        // mView?.displayCategoryList(categoryList)
     }
 
+    override fun onTapDownloadItem(fileName: String, uri: String) {
+
+    }
 
 
     private fun getAllCategoryList(lifecycleOwner: LifecycleOwner){

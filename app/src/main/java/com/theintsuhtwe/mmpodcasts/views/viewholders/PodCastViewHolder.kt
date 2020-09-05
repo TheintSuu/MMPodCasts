@@ -18,11 +18,18 @@ class PodCastViewHolder(itemView : View, delegate : PodCastItemDelegate) : BaseV
     init{
         itemView.setOnClickListener {
             mData?.let {
-               delegate.onTapPodCastItem(it.id)
+                delegate.onTapPodCastItem(it.id)
             }
 
 
         }
+
+        itemView.btnAudioDownload
+            .setOnClickListener {
+                mData?.let {
+                    delegate.onTapDownloadItem(it.title, it.audio)
+                }
+            }
 
 
     }
@@ -35,8 +42,8 @@ class PodCastViewHolder(itemView : View, delegate : PodCastItemDelegate) : BaseV
 
         loadImage(
             itemView.context as Activity,
-        data.image,
-        itemView.ivPodcastImage)
+            data.image,
+            itemView.ivPodcastImage)
 
         //itemView.tvPodCastTimeLeft.text = data.audio_length_sec.toString()
         itemView.tvPodCastTimeLeft.text = audioPlayTime(data.audio_length)
@@ -44,7 +51,7 @@ class PodCastViewHolder(itemView : View, delegate : PodCastItemDelegate) : BaseV
 
 
 
-            itemView.tvPodCastTitle.text = data.title
+        itemView.tvPodCastTitle.text = data.title
 
 
     }

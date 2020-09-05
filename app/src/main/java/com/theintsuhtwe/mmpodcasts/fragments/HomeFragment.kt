@@ -1,10 +1,16 @@
 package com.theintsuhtwe.mmpodcasts.fragments
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.theintsuhtwe.mmpodcasts.R
@@ -15,9 +21,12 @@ import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
+import com.theintsuhtwe.mmpodcasts.services.FileDownloadAsync
+import com.theintsuhtwe.mmpodcasts.utils.STORAGE_PERMISSION_CODE
 import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
 import com.theintsuhtwe.mmpodcasts.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_podcasts.*
 import kotlinx.android.synthetic.main.layout_playback_control_view.*
 import kotlinx.android.synthetic.main.layout_time_left.*
 
@@ -71,7 +80,7 @@ class HomeFragment : Fragment(), MainView {
     }
 
     companion object {
-     
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             HomeFragment().apply {
@@ -126,6 +135,57 @@ class HomeFragment : Fragment(), MainView {
 
     override fun navigateToPlayAudio(podCastId: String) {
         startActivity(PodCastDetailActivity.newItent(activity!!, podCastId))
+    }
+
+    override fun navigateToDownloadAudio(fileName: String, uri: String) {
+        AlertDialog.Builder(activity!!)
+            .setMessage("Are you sure to download?")
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok) { dialog, which -> startDownload(fileName, uri)}
+            .create().show()
+
+    }
+
+
+
+    private fun startDownload(fileName: String, uri: String){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    activity!!,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) ==
+                PackageManager.PERMISSION_DENIED
+            ) {
+                requestPermissions(
+                    arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    STORAGE_PERMISSION_CODE
+                )
+            } else {
+                val saveFileName = fileName
+                val filePath = uri
+                FileDownloadAsync(activity!!, filePath!!, saveFileName!!).execute()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            STORAGE_PERMISSION_CODE -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+                    AlertDialog.Builder(activity!!)
+                        .setMessage("Permission Denied")
+                        .setCancelable(false)
+                        .setPositiveButton(android.R.string.ok) { dialog, which -> }
+                        .create().show()
+                }
+            }
+        }
     }
 
 

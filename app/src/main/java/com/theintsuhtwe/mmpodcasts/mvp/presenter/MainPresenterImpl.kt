@@ -40,12 +40,18 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
         mView?.navigateToPlayAudio(podcastId)
     }
 
+    override fun onTabAudioDownload(fileName: String, uri: String) {
+        TODO("Not yet implemented")
+    }
 
 
     override fun onTapPodCastItem(value: String) {
         mView?.navigateToPodCastDetails(value)
     }
 
+    override fun onTapDownloadItem(fileName: String, uri: String) {
+        mView?.navigateToDownloadAudio(fileName, uri)
+    }
 
 
     private fun requestAllPodCast(lifeCycleOwner: LifecycleOwner) {

@@ -18,31 +18,18 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
     }
 
     override fun onRandomUIReady(lifeCycleOwner: LifecycleOwner) {
-
-
-        mPodCastModel.getRandomPodCastFromApiSaveToDB(
-            onSuccess = {
-
-            },
-            onError = {
-
-            }
-        )
-
-        mPodCastModel.getRandomPodCast(onError = {
-        }).observe(lifeCycleOwner, Observer {
-            mView?.displayRandomPodCast(it)
-        })
-
-
+       requestRandomPodcast(lifeCycleOwner)
     }
 
     override fun onTabAudioPlay(podcastId: String) {
         mView?.navigateToPlayAudio(podcastId)
     }
 
-    override fun onTabAudioDownload(fileName: String, uri: String) {
-        TODO("Not yet implemented")
+
+
+    override fun onSwipeRefresh(lifecycleOwner: LifecycleOwner) {
+        requestRandomPodcast(lifecycleOwner)
+        requestAllPodCast(lifecycleOwner)
     }
 
 
@@ -74,7 +61,9 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
 //        )
 
         mPodCastRecModel.getAllPodCastList(onError = {
+            mView?.enableSwipeRefresh()
         }).observe(lifeCycleOwner, Observer {
+            mView?.disableSwipeRefresh()
             mView?.displayPodCastsList(it)
         })
 
@@ -88,6 +77,24 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
             }
         )
 
+    }
+
+    fun requestRandomPodcast(lifeCycleOwner: LifecycleOwner){
+        mPodCastModel.getRandomPodCastFromApiSaveToDB(
+            onSuccess = {
+
+            },
+            onError = {
+
+            }
+        )
+
+        mPodCastModel.getRandomPodCast(onError = {
+            mView?.enableSwipeRefresh()
+        }).observe(lifeCycleOwner, Observer {
+            mView?.disableSwipeRefresh()
+            // mView?.displayRandomPodCast(it)
+        })
     }
 
 

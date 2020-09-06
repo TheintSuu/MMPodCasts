@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
-import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate
 import com.theintsuhtwe.mmpodcasts.views.viewholders.PodCastViewHolder
 import com.theintsuhtwe.shared.Adapter.BaseAdapter

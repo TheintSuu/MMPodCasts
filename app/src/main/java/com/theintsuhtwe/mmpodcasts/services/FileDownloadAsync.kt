@@ -10,17 +10,24 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Environment
 import android.os.Handler
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.MainActivity
 import com.theintsuhtwe.mmpodcasts.data.model.DownloadModelImpl
+import com.theintsuhtwe.mmpodcasts.data.model.PodCastDetailModelImpl
 import com.theintsuhtwe.mmpodcasts.data.vos.DownloadVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
+import com.theintsuhtwe.mmpodcasts.data.vos.PodcastVO
 import com.theintsuhtwe.mmpodcasts.fragments.DownloadFragment
+import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenterImpl
 import com.theintsuhtwe.mmpodcasts.utils.DOWNLOAD
 import com.theintsuhtwe.mmpodcasts.utils.FRAGMENT_Home
 import java.io.*
@@ -32,7 +39,7 @@ class FileDownloadAsync(
     private val context: Context,
     private val fileUrl: String,
     private val fileName: String,
-    private val episodeVO: EpisodeVO
+    private var episodeVO: EpisodeVO
 ) :
     AsyncTask<Void, Void, Int>() {
     private var notificationManagerCompat: NotificationManagerCompat? = null
@@ -72,8 +79,10 @@ class FileDownloadAsync(
             notificationBuilder?.build()!!
         )
         try {
-            val tmpFile = File( Environment.getExternalStorageDirectory()
-               ,  fileName)
+            val tmpFile = File(
+                Environment.getExternalStorageDirectory()
+                , fileName
+            )
             //val tmpFile = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
             val url = URL(fileUrl)
             val conection: URLConnection = url.openConnection()
@@ -140,14 +149,39 @@ class FileDownloadAsync(
                         android.R.drawable.stat_notify_error
                     }
 
-                if(success){
-                    val downloadVO = DownloadVO(
-                        path = fileName,
-                        podcastInfo = episodeVO
 
-                    )
-                    DownloadModelImpl.insertDownloadPodCast(downloadVO)
-                }
+
+               var podcastVO :  EpisodeDetailVO ?= null
+                PodCastDetailModelImpl.getPodCastDetailFromApiSaveToDB(episodeVO.id,
+                    onSuccess = {
+                        podcastVO = it
+                        if (success) {
+                            val downloadVO = podcastVO?.let {
+                                DownloadVO(
+                                    path = fileName,
+                                    image = episodeVO.image,
+                                    episodeId = episodeVO.id,
+                                    audio = episodeVO.audio,
+                                    listennotes_url = episodeVO.listennotes_url,
+                                    audio_length = episodeVO.audio_length,
+                                    description = episodeVO.description,
+                                    title = episodeVO.title,
+                                    pub_date_ms = episodeVO.pub_date_ms,
+                                    podcast = it.podcast,
+                                    thumbnail = episodeVO.thumbnail
+                                )
+
+
+                            }
+                            downloadVO?.let { DownloadModelImpl.insertDownloadPodCast(it) }
+
+
+                        }
+                    },
+                    onError = {
+                        Log.d("Error","hello")
+                    })
+
                 notificationBuilder?.setContentTitle(fileName)
                 notificationBuilder?.setSmallIcon(resId)
                 notificationBuilder?.setOngoing(false)
@@ -176,5 +210,4 @@ class FileDownloadAsync(
         }
         return NotificationCompat.Builder(context, channelId)
     }
-
 }

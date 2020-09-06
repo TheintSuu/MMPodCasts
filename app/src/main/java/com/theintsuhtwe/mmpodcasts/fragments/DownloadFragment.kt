@@ -1,35 +1,21 @@
 package com.theintsuhtwe.mmpodcasts.fragments
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.os.Build
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.DownloadPodCastAdapter
-import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
 import com.theintsuhtwe.mmpodcasts.data.vos.DownloadVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DownloadPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DownloadPresenterImpl
-import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.DownloadView
-import com.theintsuhtwe.mmpodcasts.services.FileDownloadAsync
-import com.theintsuhtwe.mmpodcasts.utils.STORAGE_PERMISSION_CODE
-import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
-import com.theintsuhtwe.mmpodcasts.utils.loadImage
-import com.theintsuhtwe.mmpodcasts.views.viewpods.EmptyViewPod
 import kotlinx.android.synthetic.main.fragment_download.*
-
-import kotlinx.android.synthetic.main.layout_playback_control_view.*
-import kotlinx.android.synthetic.main.layout_time_left.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,9 +28,8 @@ class DownloadFragment : Fragment(), DownloadView{
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var mMainAdapter: DownloadPodCastAdapter
+    lateinit var mDownloadAdapter: DownloadPodCastAdapter
 
-    //private lateinit var mViewPodEmpty: EmptyViewPod
 
     lateinit var mPresenter : DownloadPresenter
 
@@ -67,11 +52,13 @@ class DownloadFragment : Fragment(), DownloadView{
 
         setUpPresenter()
 
+        setUpAdapter()
+
        // setUpViewPod()
 
+
+
         mPresenter.onUiReady(this)
-
-
         return v
     }
 
@@ -79,13 +66,15 @@ class DownloadFragment : Fragment(), DownloadView{
 
         setUpRecyclerView()
 
+
+
     }
 
     companion object {
 
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
+            DownloadFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
@@ -100,20 +89,24 @@ class DownloadFragment : Fragment(), DownloadView{
     }
 
     private fun setUpRecyclerView(){
-        mMainAdapter = DownloadPodCastAdapter(mPresenter)
+
         val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        mainRecyler.layoutManager = linearLayoutManager
-        mainRecyler.adapter =  mMainAdapter
+        mainRecylerDownload.layoutManager = linearLayoutManager
+        mainRecylerDownload.adapter =  mDownloadAdapter
 
     }
 
 
     override fun displayDownloadPodCastsList(podCastsList: List<DownloadVO>) {
-       mMainAdapter.setData(podCastsList.toMutableList())
+        mDownloadAdapter.setData(podCastsList.toMutableList())
     }
 
     override fun navigateToPodCastDetails(episodeId: String) {
         startActivity(PodCastDetailActivity.newItent(activity!!, episodeId))
+    }
+
+    private  fun setUpAdapter(){
+        mDownloadAdapter = DownloadPodCastAdapter(mPresenter)
     }
 
 //    private fun setUpViewPod() {

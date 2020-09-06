@@ -8,4 +8,6 @@ import com.theintsuhtwe.shared.mvp.presenter.BasePresenter
 
 interface CategoryPresenter : PodCastItemDelegate, BasePresenter<CategoryView> {
     fun onUiReady( lifecycleOwner: LifecycleOwner)
+
+    fun onSwipeRefresh(lifecycleOwner: LifecycleOwner)
 }

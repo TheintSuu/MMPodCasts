@@ -8,16 +8,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.theintsuhtwe.mmpodcasts.R
-import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastCategoryAdapter
 import com.theintsuhtwe.mmpodcasts.data.vos.GenresVO
-import com.theintsuhtwe.mmpodcasts.delegate.PodCastItemDelegate
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.CategoryPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.CategoryPresenterImpl
-import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.CategoryView
-import kotlinx.android.synthetic.main.fragment_download.*
-import kotlinx.android.synthetic.main.fragment_download.mainRecyler
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -52,13 +48,14 @@ class SearchFragment : Fragment(), CategoryView {
 
         setUpPresenter()
 
-
         mPresenter.onUiReady(this)
 
         return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setUpSwipeRefresh()
+
         setUpRecycle()
 
     }
@@ -91,6 +88,14 @@ class SearchFragment : Fragment(), CategoryView {
 
     }
 
+    override fun enableSwipeRefresh() {
+        swipeRefreshCategoryLayout.isRefreshing = true
+    }
+
+    override fun disableSwipeRefresh() {
+        swipeRefreshCategoryLayout.isRefreshing = false
+    }
+
     private fun setUpPresenter(){
         mPresenter = ViewModelProviders.of(this).get(CategoryPresenterImpl::class.java)
         mPresenter.initPresenter(this)
@@ -107,5 +112,12 @@ class SearchFragment : Fragment(), CategoryView {
     private fun bindData(category : GenresVO){
         //loadImage(activity, category.)
         tvCategoryTitle.text = category.name
+    }
+
+    private fun setUpSwipeRefresh(){
+        swipeRefreshCategoryLayout.setOnRefreshListener {
+            mPresenter.onSwipeRefresh(this)
+        }
+
     }
 }

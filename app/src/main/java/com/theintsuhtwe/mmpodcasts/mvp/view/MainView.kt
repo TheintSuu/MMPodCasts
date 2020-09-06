@@ -1,7 +1,6 @@
 package com.theintsuhtwe.mmpodcasts.mvp.view
 
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
-import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.shared.mvp.BaseView
 
 interface MainView : BaseView {
@@ -14,6 +13,10 @@ interface MainView : BaseView {
     fun navigateToPlayAudio(podCastId: String)
 
     fun navigateToDownloadAudio(episodeVO: EpisodeVO)
+
+    fun enableSwipeRefresh()
+
+    fun disableSwipeRefresh()
 
 
 }

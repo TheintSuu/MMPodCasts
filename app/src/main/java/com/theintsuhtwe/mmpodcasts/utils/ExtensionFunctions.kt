@@ -2,6 +2,8 @@ package com.theintsuhtwe.mmpodcasts.utils
 
 import android.app.Activity
 import android.content.Context
+import android.text.Html
+import android.text.Spanned
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -26,18 +28,31 @@ fun audioPlayTime(totalSecond : Int): String{
     var  min = 0
 
     hour = totalSecond / 3600
-     min = hour % 60
+    min = totalSecond % 3600
+    min = min / 60
+
+
 
     var time = ""
     if(hour>0){
-        time = "$hour hr"
+        time = "$hour hr :"
     }
     if(min>0){
-        time += " : $min min"
+        time += " $min min"
     }
     return time
 
 
+}
+
+
+fun fromHtmlToString(text : String) : Spanned {
+
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+        return Html.fromHtml(text)
+    } else {
+        return  Html.fromHtml(text)
+    }
 }
 
 

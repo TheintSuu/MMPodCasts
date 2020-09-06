@@ -10,4 +10,8 @@ interface CategoryView : BaseView {
     fun displayDefaultCategory(category : GenresVO)
 
     fun navigateToPodCastByCategory(categoryId: String)
+
+    fun enableSwipeRefresh()
+
+    fun disableSwipeRefresh()
 }

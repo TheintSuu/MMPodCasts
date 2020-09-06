@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.data.model.PodCastDetailModelImpl
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
 import com.theintsuhtwe.shared.mvp.presenter.AbstractBasePresenter
@@ -29,6 +30,8 @@ class DetailPresenterImpl : DetailPresenter, AbstractBasePresenter<DetailView>()
     }
 
 
+
+
     private fun getAllPodCastDetail(podCastId : String, lifecycleOwner: LifecycleOwner){
 
         mPodCastDetail.getPodCastDetail(podCastId){
@@ -40,7 +43,9 @@ class DetailPresenterImpl : DetailPresenter, AbstractBasePresenter<DetailView>()
 
         })
         mPodCastDetail.getPodCastDetailFromApiSaveToDB(podCastId,
-            onSuccess = {},
+            onSuccess = {
+
+            },
             onError = {
                 Log.d("Error","hello")
             })

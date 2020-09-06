@@ -15,11 +15,13 @@ import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerControlView
 import com.google.android.exoplayer2.util.Util
 import com.theintsuhtwe.mmpodcasts.R
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
 import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
+import com.theintsuhtwe.mmpodcasts.utils.fromHtmlToString
 import com.theintsuhtwe.mmpodcasts.utils.loadImage
 import com.theintsuhtwe.shared.activities.BaseActivity
 import io.reactivex.Flowable.interval
@@ -103,10 +105,14 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     }
 
 
-    private fun bindData(podCast : EpisodeVO){
+    private fun bindData(podCast : EpisodeDetailVO){
         loadImage(this@PodCastDetailActivity, podCast.image, ivMoviesImage)
 
-        tvDetailDescription.text = podCast.description
+
+
+        tvDetailDescription.text = fromHtmlToString(podCast.description)
+
+        tvDetailPodCastCategory.text = podCast.podcast.genre_ids.last()
 
         //tvTimeLong.text = audioPlayTime(podCast.audio_length_sec)
         tvTimeLong.text = audioPlayTime(podCast.audio_length)
@@ -120,7 +126,9 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         mPresenter.onTabAudioPlay(podCast.audio)
     }
 
-    override fun displayAllPodCastDetail(detail: EpisodeVO) {
+
+
+    override fun displayAllPodCastDetail(detail: EpisodeDetailVO) {
         bindData(detail)
     }
 
@@ -154,7 +162,6 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                     .subscribeOn(Schedulers.io( )).map {
                         if(mediaPlayer!!.isPlaying){
                             updateSeekBar()
-
                         }
                         return@map it
 

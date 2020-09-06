@@ -1,5 +1,6 @@
 package com.theintsuhtwe.mmpodcasts.data.vos
 
+import androidx.annotation.Nullable
 import androidx.room.*
 import com.google.gson.annotations.SerializedName
 import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.PodCastTypeConverters
@@ -19,9 +20,6 @@ data class EpisodeVO(
    @SerializedName("listennotes_edit_url")  val listennotes_edit_url: String,
    @SerializedName("listennotes_url")  val listennotes_url: String,
    @SerializedName("maybe_audio_in")  val maybe_audio_in : Boolean,
-//   @Embedded
-//   @TypeConverters(PodCastTypeConverters::class)
-   //@SerializedName("podcast")  val podcast:PodcastVO,
    @SerializedName("pub_date_ms")  val pub_date_ms: Long,
    @SerializedName("thumbnail")  val thumbnail: String,
    @SerializedName("title")  val title: String

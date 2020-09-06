@@ -23,12 +23,10 @@
         android:id="@+id/tvPodCastTimeLeft"
         android:layout_alignParentEnd="true"
         android:text="1h left"
-        android:layout_marginRight="@dimen/margin_medium"
         android:layout_centerVertical="true"
-        android:gravity="center"
         android:textColor="@color/textColorTertray"
-        android:textSize="@dimen/text_small"
-        android:paddingHorizontal="@dimen/margin_medium"
+        android:textSize="@dimen/text_label_small"
+        android:paddingHorizontal="@dimen/margin_small"
 
 
         />

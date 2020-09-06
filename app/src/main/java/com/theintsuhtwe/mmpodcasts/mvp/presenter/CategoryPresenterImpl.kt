@@ -17,21 +17,24 @@ class CategoryPresenterImpl : CategoryPresenter, AbstractBasePresenter<CategoryV
      getAllCategoryList(lifecycleOwner)
     }
 
+    override fun onSwipeRefresh(lifecycleOwner: LifecycleOwner) {
+        getAllCategoryList(lifecycleOwner)
+    }
+
     override fun onTapPodCastItem(value: String) {
         mView?.navigateToPodCastByCategory(value)
-       // mView?.displayCategoryList(categoryList)
     }
 
     override fun onTapDownloadItem(episodeVO: EpisodeVO) {
-
     }
-
 
     private fun getAllCategoryList(lifecycleOwner: LifecycleOwner){
         mCategoryModel.getAllGenresList{
+            mView?.enableSwipeRefresh()
 
         }.observe(lifecycleOwner, Observer {
             it?.let {
+                mView?.disableSwipeRefresh()
                 mView?.displayCategoryList(it)
 
                 //mView?.displayDefaultCategory(it.first())

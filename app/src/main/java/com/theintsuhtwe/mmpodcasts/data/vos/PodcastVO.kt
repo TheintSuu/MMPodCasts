@@ -1,22 +1,15 @@
 package com.theintsuhtwe.mmpodcasts.data.vos
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
-import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.ExtraTypeConverters
-import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.GenresTypeConverters
-import com.theintsuhtwe.mmpodcasts.persistence.typeconverters.LookinForTypeConverters
 
 
 data class PodcastVO(
-    //@Embedded
-   // @TypeConverters(GenresTypeConverters::class)
-   // @SerializedName("genre_ids")  val genre_ids: List<Int>,
+    @SerializedName("genres")  val genre_ids: List<String>,
     @PrimaryKey
     @ColumnInfo(name = "podcast_id")
-    @SerializedName("id")  val id: String,
+    @SerializedName("id")  val podCastId: String,
     @ColumnInfo(name = "podcast-description")
     @SerializedName("description")  val description: String,
 

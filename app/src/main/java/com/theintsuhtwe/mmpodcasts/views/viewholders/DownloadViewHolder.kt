@@ -17,7 +17,7 @@ class DownloadViewHolder (itemView : View, delegate : PodCastItemDelegate) : Bas
     init{
         itemView.setOnClickListener {
             mData?.let {
-                it.podcastInfo?.id?.let { it1 -> delegate.onTapPodCastItem(it1) }
+                it.podcast.podCastId.let { it1 -> delegate.onTapPodCastItem(it1) }
             }
         }
 
@@ -31,7 +31,7 @@ class DownloadViewHolder (itemView : View, delegate : PodCastItemDelegate) : Bas
         mData = data
 
 
-        data.podcastInfo?.image?.let {
+        data.image?.let {
             loadImage(
                 itemView.context as Activity,
                 it,
@@ -39,12 +39,12 @@ class DownloadViewHolder (itemView : View, delegate : PodCastItemDelegate) : Bas
         }
 
         //itemView.tvPodCastTimeLeft.text = data.audio_length_sec.toString()
-        itemView.tvPodCastHighLight.text = data.podcastInfo?.description?.let { it }
+        itemView.tvPodCastHighLight.text = data.description?.let { it }
 
 
 
 
-        itemView.tvPodCastTitle.text = data.podcastInfo?.title
+        itemView.tvPodCastTitle.text = data.title
 
 
     }

@@ -3,16 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="135dp"
     android:paddingVertical="@dimen/margin_medium"
-    android:paddingHorizontal="@dimen/margin_medium_3"
+    android:paddingHorizontal="@dimen/margin_medium"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/ivPodcastImage"
-        android:layout_width="90dp"
+        android:layout_width="130dp"
         android:layout_height="135dp"
         android:paddingTop="@dimen/margin_medium"
         android:paddingHorizontal="@dimen/margin_medium_2"
-        android:layout_marginRight="@dimen/margin_medium"
         android:scaleType="centerCrop"
         android:src="@drawable/placeholder"/>
 
@@ -21,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_toEndOf="@id/ivPodcastImage"
         android:paddingTop="@dimen/margin_card_medium"
-        android:paddingLeft="12dp"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:paddingRight="@dimen/margin_medium"
         android:layout_height="match_parent">
 
         <TextView
@@ -59,18 +59,19 @@
             android:layout_alignTop="@id/tvPodCastTitle"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:paddingLeft="@dimen/margin_medium_3"
+            android:paddingLeft="@dimen/margin_medium_2"
             android:src="@drawable/ic_baseline_cloud_download_24" />
+
+
         <include
             layout="@layout/layout_time_left"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvPodCastTitle"/>
 
 
-
-
     </RelativeLayout>
+
 
 
 </RelativeLayout>

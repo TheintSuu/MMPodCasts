@@ -1,12 +1,10 @@
 package com.theintsuhtwe.mmdownloads.persistence.daos
 
-import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+
+import androidx.room.*
 import com.theintsuhtwe.mmpodcasts.data.vos.DownloadVO
 
+@Dao
 interface DownloadDao {
     @Query("SELECT * FROM download")
     fun getAlldownload(): List<DownloadVO>

@@ -17,16 +17,15 @@ import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.PodCastAdapter
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
-import com.theintsuhtwe.mmpodcasts.data.vos.PlayListItemVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.MainPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.MainView
 import com.theintsuhtwe.mmpodcasts.services.FileDownloadAsync
 import com.theintsuhtwe.mmpodcasts.utils.STORAGE_PERMISSION_CODE
 import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
+import com.theintsuhtwe.mmpodcasts.utils.fromHtmlToString
 import com.theintsuhtwe.mmpodcasts.utils.loadImage
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_podcasts.*
 import kotlinx.android.synthetic.main.layout_playback_control_view.*
 import kotlinx.android.synthetic.main.layout_time_left.*
 
@@ -61,9 +60,7 @@ class HomeFragment : Fragment(), MainView {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_home, container, false)
 
-
         setUpPresenter()
-
 
         mPresenter.onUiReady(this)
 
@@ -74,8 +71,10 @@ class HomeFragment : Fragment(), MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setUpSwipeRefresh()
 
         setUpRecyclerView()
+
 
     }
 
@@ -107,14 +106,17 @@ class HomeFragment : Fragment(), MainView {
     }
 
     override fun displayRandomPodCast(podCast: EpisodeVO) {
-        if(podCast != null && podCast.explicit_content!= null){
-            tvPlaybackHomeDescription.text = podCast.description
+
+        podCast?.let {podCast
+            tvPlaybackHomeDescription.text = fromHtmlToString(podCast.description)
             tvPlaybackDescription.text= podCast.description
             tvPlaybackTitle.text = podCast.title
             //tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length_sec)
             tvPodCastTimeLeft.text = audioPlayTime(podCast.audio_length)
             activity?.let { loadImage(it, podCast.image, exo_rev ) }
         }
+
+
 
 
 
@@ -146,6 +148,13 @@ class HomeFragment : Fragment(), MainView {
 
     }
 
+    override fun enableSwipeRefresh() {
+        swipeRefreshLayout.isRefreshing = true
+    }
+
+    override fun disableSwipeRefresh() {
+        swipeRefreshLayout.isRefreshing = false
+    }
 
 
     private fun startDownload(episodeVO: EpisodeVO){
@@ -189,4 +198,11 @@ class HomeFragment : Fragment(), MainView {
     }
 
 
+
+    private fun setUpSwipeRefresh(){
+        swipeRefreshLayout.setOnRefreshListener {
+            mPresenter.onSwipeRefresh(this)
+        }
+
+    }
 }

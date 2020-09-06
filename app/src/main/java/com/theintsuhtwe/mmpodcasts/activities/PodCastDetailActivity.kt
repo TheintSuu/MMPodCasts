@@ -1,51 +1,54 @@
 package com.theintsuhtwe.mmpodcasts.activities
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.widget.MediaController
 import android.os.Bundle
-import android.os.Handler
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProviders
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.PlayerControlView
 import com.google.android.exoplayer2.util.Util
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
-import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
-import com.theintsuhtwe.mmpodcasts.utils.audioPlayTime
-import com.theintsuhtwe.mmpodcasts.utils.fromHtmlToString
-import com.theintsuhtwe.mmpodcasts.utils.loadImage
+import com.theintsuhtwe.mmpodcasts.utils.*
 import com.theintsuhtwe.shared.activities.BaseActivity
-import io.reactivex.Flowable.interval
-import io.reactivex.Observable.interval
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Observables
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_pod_cast_detail.*
 import kotlinx.android.synthetic.main.layout_header.*
 import kotlinx.android.synthetic.main.layout_playback_forward.*
 import kotlinx.android.synthetic.main.layout_time_left.*
 import kotlinx.android.synthetic.main.mini_play_back_layout.*
 import org.json.JSONObject
+import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class PodCastDetailActivity : BaseActivity(), DetailView {
+
+  var compositeDisposable  = CompositeDisposable()
     companion object {
 
         const val PodCasts_ID_EX = "PodCasts Id Extra"
+        const val PodCasts_EX = "PodCasts  Extra"
 
         fun newItent(context: Context, newsId : String): Intent {
             val intent =  Intent(context,  PodCastDetailActivity::class.java)
             intent.putExtra(PodCasts_ID_EX, newsId)
+            return intent
+        }
+
+        fun newItentWithEpisode(context: Context, episode : EpisodeDetailVO): Intent {
+            val intent =  Intent(context,  PodCastDetailActivity::class.java)
+            intent.putExtraJson(PodCasts_EX, episode)
             return intent
         }
     }
@@ -58,14 +61,8 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     private var onTime: Int = 0
     private var playTime: Int = 0
     private var endTime: Int = 0
-    private var forwardTime: Int = 30000
-    private var backwardTime: Int = 15000
-    var handler = Handler()
-    private var player: SimpleExoPlayer? = null
-    private var playWhenReady = true
-    private var currentWindow = 0
-    private var playbackPosition: Long = 0
-    private var playerControlView : PlayerControlView?= null
+   
+ 
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -79,11 +76,11 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         setUpMediaController()
 
         setUpListener()
-        val podCastId = intent.getStringExtra(PodCasts_ID_EX)
+        
+        
 
-        podCastId?.let { mPresenter.onUiReady(podCastId = it,
-            lifecycleOwner = this@PodCastDetailActivity
-        ) }
+
+        setUpDetail()
 
 
     }
@@ -106,8 +103,8 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
 
     private fun bindData(podCast : EpisodeDetailVO){
-        loadImage(this@PodCastDetailActivity, podCast.image, ivMoviesImage)
 
+        loadImage(this@PodCastDetailActivity, podCast.image, ivMoviesImage)
 
 
         tvDetailDescription.text = fromHtmlToString(podCast.description)
@@ -134,8 +131,42 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
     override fun playAudio(audio: String) {
         mediaPlayer = MediaPlayer.create(this, Uri.parse(audio))
+//        if(audio.contains("https")){
+//
+//        }else{
+//            mediaPlayer = MediaPlayer()
+//            mediaPlayer!!.setDataSource(audio)
+//            mediaPlayer!!.prepare()
+//            mediaPlayer!!.start()
+//        }
 
-        val deque: Deque<JSONObject> = ArrayDeque()
+
+
+//        if(audio.contains("https")){
+//            mediaPlayer = MediaPlayer().apply {
+//                setAudioAttributes(
+//                    AudioAttributes.Builder()
+//                        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                        .setUsage(AudioAttributes.USAGE_MEDIA)
+//                        .build()
+//                )
+//                setDataSource(audio)
+//            }
+//
+//        }else{
+//                mediaPlayer = MediaPlayer().apply {
+//                    setAudioAttributes(
+//                        AudioAttributes.Builder()
+//                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                            .setUsage(AudioAttributes.USAGE_MEDIA)
+//                            .build()
+//                    )
+//                    setDataSource(applicationContext, Uri.parse(audio))
+//                }
+//
+//        }
+
+
     }
 
     private fun setUpListener(){
@@ -157,7 +188,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                 tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
                 pbPodCast.progress = mediaPlayer!!.currentPosition
 
-                io.reactivex.Observable.interval(1000L, TimeUnit.MILLISECONDS)
+                compositeDisposable.add(io.reactivex.Observable.interval(1000L, TimeUnit.MILLISECONDS)
                     .timeInterval()
                     .subscribeOn(Schedulers.io( )).map {
                         if(mediaPlayer!!.isPlaying){
@@ -172,6 +203,10 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                            UIUpdate()
                         }
                     }
+                )
+
+
+
 
 
 
@@ -187,8 +222,8 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
         btnRew.setOnClickListener {
             if(mediaPlayer!!.isPlaying){
-                if ((playTime - backwardTime) > 0) {
-                    playTime -= backwardTime
+                if ((playTime - BackwardTime) > 0) {
+                    playTime -= BackwardTime
                     mediaPlayer!!.seekTo(playTime)
                 }
                 else {
@@ -204,8 +239,8 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
         btnForward.setOnClickListener {
             if(mediaPlayer!!.isPlaying){
-                if ((playTime + forwardTime) <= endTime) {
-                    playTime += forwardTime
+                if ((playTime + ForwardTime) <= endTime) {
+                    playTime += ForwardTime
                     mediaPlayer!!.seekTo(playTime)
                 }
                 else {
@@ -303,10 +338,10 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         pbPodCast.progress = mediaPlayer!!.currentPosition
     }
 
-
-
-
-
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
@@ -337,9 +372,26 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     private fun releasePlayer() {
         if (mediaPlayer != null) {
             // playbackPosition = mediaPlayer!!.currentPosition.toLong()
+            mediaPlayer!!.stop()
             mediaPlayer!!.release()
             mediaPlayer = null
         }
     }
+    
+    private fun setUpDetail(){
+        val podCastId = intent.getStringExtra(PodCasts_ID_EX)
+
+        if(podCastId == null){
+            val episodeDetailVO: EpisodeDetailVO? = intent.getJsonExtra(PodCasts_EX, EpisodeDetailVO::class.java)
+            episodeDetailVO?.let { bindData(it) }
+
+        }else {
+            podCastId?.let { mPresenter.onUiReady(podCastId = it,
+                lifecycleOwner = this@PodCastDetailActivity
+            ) }
+        }
+    }
+
+
 
 }

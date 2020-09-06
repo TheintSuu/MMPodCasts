@@ -42,6 +42,8 @@ class HomeFragment : Fragment(), MainView {
     private var param1: String? = null
     private var param2: String? = null
 
+    var play_back_episode_Id : String = " "
+
     lateinit var mMainAdapter: PodCastAdapter
 
     lateinit var mPresenter : MainPresenter
@@ -108,6 +110,7 @@ class HomeFragment : Fragment(), MainView {
     override fun displayRandomPodCast(podCast: EpisodeVO) {
 
         podCast?.let {podCast
+            play_back_episode_Id = podCast.id
             tvPlaybackHomeDescription.text = fromHtmlToString(podCast.description)
             tvPlaybackDescription.text= podCast.description
             tvPlaybackTitle.text = podCast.title

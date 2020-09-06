@@ -12,9 +12,11 @@ import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.PodCastDetailActivity
 import com.theintsuhtwe.mmpodcasts.adapters.DownloadPodCastAdapter
 import com.theintsuhtwe.mmpodcasts.data.vos.DownloadVO
+import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DownloadPresenter
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DownloadPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.DownloadView
+import com.theintsuhtwe.mmpodcasts.views.viewpods.EmptyViewPod
 import kotlinx.android.synthetic.main.fragment_download.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,8 +32,22 @@ class DownloadFragment : Fragment(), DownloadView{
 
     lateinit var mDownloadAdapter: DownloadPodCastAdapter
 
-
     lateinit var mPresenter : DownloadPresenter
+
+    private lateinit var mviewPodEmpty: EmptyViewPod
+
+
+    companion object {
+
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            DownloadFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,32 +72,24 @@ class DownloadFragment : Fragment(), DownloadView{
 
        // setUpViewPod()
 
-
-
         mPresenter.onUiReady(this)
         return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        setUpViewPod()
 
         setUpRecyclerView()
 
-
-
     }
 
-    companion object {
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DownloadFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun displayDownloadPodCastsList(podCastsList: List<DownloadVO>) {
+        mDownloadAdapter.setData(podCastsList.toMutableList())
     }
 
+    override fun navigateToPodCastDetails(episode: EpisodeDetailVO) {
+        startActivity(PodCastDetailActivity.newItentWithEpisode(activity!!, episode))
+    }
 
     private fun setUpPresenter(){
         mPresenter = ViewModelProviders.of(this).get(DownloadPresenterImpl::class.java)
@@ -94,25 +102,22 @@ class DownloadFragment : Fragment(), DownloadView{
         mainRecylerDownload.layoutManager = linearLayoutManager
         mainRecylerDownload.adapter =  mDownloadAdapter
 
+        mainRecylerDownload.setEmptyView(mviewPodEmpty)
+
     }
 
-
-    override fun displayDownloadPodCastsList(podCastsList: List<DownloadVO>) {
-        mDownloadAdapter.setData(podCastsList.toMutableList())
+    private fun setUpViewPod() {
+        mviewPodEmpty = vpEmpty as EmptyViewPod
+       // mviewPodEmpty.setEmptyData(EM_NO_NEWS_AVAILABLE, EMPTY_IMAGE_URL)
+        mviewPodEmpty.setDelegate(mPresenter)
     }
 
-    override fun navigateToPodCastDetails(episodeId: String) {
-        startActivity(PodCastDetailActivity.newItent(activity!!, episodeId))
-    }
 
     private  fun setUpAdapter(){
         mDownloadAdapter = DownloadPodCastAdapter(mPresenter)
     }
 
-//    private fun setUpViewPod() {
-//        mViewPodEmpty = vpEmpty as EmptyViewPod
-//        mViewPodEmpty.setDelegate(mPresenter)
-//    }
+
 
 
 }

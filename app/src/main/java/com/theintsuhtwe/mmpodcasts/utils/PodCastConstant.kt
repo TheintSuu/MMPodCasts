@@ -14,6 +14,9 @@ const val GET_UPNEXT_PODCAST = "/playlists/{id}"
 
 const val GET_GENRES = "genres"
 
+const val ForwardTime: Int = 30000
+const val BackwardTime: Int = 15000
+
 const val Play_List_ID = "id"
 const val DOWNLOAD = "Download"
 const val Play_List_ID_KEY = "SgTozE1ZAe3"

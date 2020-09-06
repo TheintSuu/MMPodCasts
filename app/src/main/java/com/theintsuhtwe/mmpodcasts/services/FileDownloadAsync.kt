@@ -45,6 +45,7 @@ class FileDownloadAsync(
     private var notificationManagerCompat: NotificationManagerCompat? = null
     private var notificationBuilder: NotificationCompat.Builder? = null
     private var success: Boolean = false
+    private var url : String = ""
     override fun doInBackground(vararg params: Void?): Int {
         val rnds = (0..10).random()
         notificationManagerCompat = NotificationManagerCompat.from(context)
@@ -83,6 +84,8 @@ class FileDownloadAsync(
                 Environment.getExternalStorageDirectory()
                 , fileName
             )
+            url = tmpFile.absolutePath.toString()
+
             //val tmpFile = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
             val url = URL(fileUrl)
             val conection: URLConnection = url.openConnection()
@@ -158,7 +161,7 @@ class FileDownloadAsync(
                         if (success) {
                             val downloadVO = podcastVO?.let {
                                 DownloadVO(
-                                    path = fileName,
+                                    path =  episodeVO.audio,
                                     image = episodeVO.image,
                                     episodeId = episodeVO.id,
                                     audio = episodeVO.audio,

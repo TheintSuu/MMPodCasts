@@ -14,6 +14,9 @@ import com.theintsuhtwe.shared.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
+    val homeFragment = HomeFragment.newInstance("a", "b")
+    val searchFragment = SearchFragment.newInstance("a", "b")
+    val downloadFragment = DownloadFragment.newInstance("a", "b")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,15 +30,15 @@ class MainActivity : BaseActivity() {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {
                 when (item.itemId) {
                     R.id.nav_home -> {
-                        callFragment(HomeFragment.newInstance("a", "b"))
+                        callFragment(homeFragment)
                         return true
                     }
                     R.id.nav_search -> {
-                        callFragment(SearchFragment.newInstance("a", "b"))
+                        callFragment(searchFragment)
                         return true
                     }
                     R.id.nav_download -> {
-                        callFragment(DownloadFragment.newInstance("a", "b"))
+                        callFragment(downloadFragment)
                         return true
                     }
                     R.id.nav_profile -> {

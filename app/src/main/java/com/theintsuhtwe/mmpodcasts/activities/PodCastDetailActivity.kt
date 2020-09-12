@@ -1,17 +1,18 @@
 package com.theintsuhtwe.mmpodcasts.activities
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
-import android.widget.MediaController
 import android.os.Bundle
+import android.widget.MediaController
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.exoplayer2.util.Util
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipDrawable
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
 import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenter
@@ -19,18 +20,16 @@ import com.theintsuhtwe.mmpodcasts.mvp.presenter.DetailPresenterImpl
 import com.theintsuhtwe.mmpodcasts.mvp.view.DetailView
 import com.theintsuhtwe.mmpodcasts.utils.*
 import com.theintsuhtwe.shared.activities.BaseActivity
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_pod_cast_detail.*
 import kotlinx.android.synthetic.main.layout_header.*
 import kotlinx.android.synthetic.main.layout_playback_forward.*
 import kotlinx.android.synthetic.main.layout_time_left.*
 import kotlinx.android.synthetic.main.mini_play_back_layout.*
-import org.json.JSONObject
-import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 class PodCastDetailActivity : BaseActivity(), DetailView {
 
@@ -72,13 +71,9 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
         setUpPresenter()
 
-
         setUpMediaController()
 
         setUpListener()
-        
-        
-
 
         setUpDetail()
 
@@ -95,7 +90,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setUpMediaController(){
         mediaController = MediaController(this)
-        mediaPlayer = MediaPlayer()
+      //  mediaPlayer = MediaPlayer()
 
         pbPodCast.max = 100
         pbPodCast.min = 0
@@ -109,14 +104,27 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
         tvDetailDescription.text = fromHtmlToString(podCast.description)
 
-        tvDetailPodCastCategory.text = podCast.podcast.genre_ids.last()
+        podCast.podcast.genre_ids.forEach {
+            val chip = Chip(this)
+            chip.text = it
+            val drawable = ChipDrawable.createFromAttributes(this, null, 0, R.style.ChipTheme)
+            chip.setChipDrawable(drawable)
+            chip.setCloseIconVisible(false)
+            tvDetailPodCastCategory.addView(chip)
+        }
+
+
+
+
+
+        //tvDetailPodCastCategory.text = podCast.podcast.genre_ids.last()
 
         //tvTimeLong.text = audioPlayTime(podCast.audio_length_sec)
         tvTimeLong.text = audioPlayTime(podCast.audio_length)
 
         tvPodCastTimeStart.setText(milliSecondToString(0))
         btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_play_circle_outline_24))
-        tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.duration))
+        tvPodCastTimeLeft.setText(milliSecondToString((mediaPlayer?.duration ?: 0)))
 
         tvDetailTitle.text = podCast.title
         pbPodCast.progress = 0
@@ -130,14 +138,16 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     }
 
     override fun playAudio(audio: String) {
+
         mediaPlayer = MediaPlayer.create(this, Uri.parse(audio))
+
 //        if(audio.contains("https")){
 //
 //        }else{
 //            mediaPlayer = MediaPlayer()
-//            mediaPlayer!!.setDataSource(audio)
-//            mediaPlayer!!.prepare()
-//            mediaPlayer!!.start()
+//            mediaPlayer?.setDataSource(audio)
+//            mediaPlayer?.prepare()
+//            mediaPlayer?.start()
 //        }
 
 
@@ -172,26 +182,26 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
     private fun setUpListener(){
 
         btnPlay.setOnClickListener {
-            if(!(mediaPlayer?.isPlaying)!!){
+            if(mediaPlayer?.isPlaying == false ){
                 mediaPlayer?.start()
 
-                endTime = mediaPlayer!!.duration
+                endTime = mediaPlayer?.duration ?: 0
 
-                playTime = mediaPlayer!!.currentPosition
+                playTime =(mediaPlayer?.currentPosition ?: 0)
 
                 pbPodCast.max = endTime
 
                 onTime = 1
 
                 btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_circle_outline_24))
-                tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
-                tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
-                pbPodCast.progress = mediaPlayer!!.currentPosition
+                tvPodCastTimeStart.setText(milliSecondToString( (mediaPlayer?.currentPosition ?: 0)))
+                tvPodCastTimeLeft.setText(milliSecondToString(endTime-(mediaPlayer?.currentPosition ?: 0)))
+                pbPodCast.progress = (mediaPlayer?.currentPosition ?: 0)
 
                 compositeDisposable.add(io.reactivex.Observable.interval(1000L, TimeUnit.MILLISECONDS)
                     .timeInterval()
                     .subscribeOn(Schedulers.io( )).map {
-                        if(mediaPlayer!!.isPlaying){
+                        if(mediaPlayer?.isPlaying == true){
                             updateSeekBar()
                         }
                         return@map it
@@ -199,7 +209,7 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
                     }
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        if( mediaPlayer!!.currentPosition != mediaPlayer!!.duration){
+                        if((mediaPlayer?.currentPosition ?: 0) != mediaPlayer?.duration){
                            UIUpdate()
                         }
                     }
@@ -215,16 +225,16 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
             }else{
                 btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_play_circle_outline_24))
-                mediaPlayer!!.pause()
+                mediaPlayer?.pause()
             }
 
         }
 
         btnRew.setOnClickListener {
-            if(mediaPlayer!!.isPlaying){
+            if(mediaPlayer?.isPlaying == true){
                 if ((playTime - BackwardTime) > 0) {
                     playTime -= BackwardTime
-                    mediaPlayer!!.seekTo(playTime)
+                    mediaPlayer?.seekTo(playTime)
                 }
                 else {
                     Toast.makeText(
@@ -238,10 +248,10 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         }
 
         btnForward.setOnClickListener {
-            if(mediaPlayer!!.isPlaying){
+            if(mediaPlayer?.isPlaying == true){
                 if ((playTime + ForwardTime) <= endTime) {
                     playTime += ForwardTime
-                    mediaPlayer!!.seekTo(playTime)
+                    mediaPlayer?.seekTo(playTime)
                 }
                 else {
                     Toast.makeText(
@@ -257,8 +267,8 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
             override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
                 // Display the current progress of SeekBar
-                if(mediaPlayer!!.isPlaying && pbPodCast.progress <= endTime){
-                    mediaPlayer!!.seekTo(pbPodCast.progress)
+                if(mediaPlayer?.isPlaying == true && pbPodCast.progress <= endTime){
+                    mediaPlayer?.seekTo(pbPodCast.progress)
                 }
                 // pbPodCast.progress
             }
@@ -302,17 +312,17 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
 
 
-        if(mediaPlayer!!.isPlaying){
+        if(mediaPlayer?.isPlaying == true){
 
-            mediaPlayer!!.pause()
+            mediaPlayer?.pause()
         }else{
-            pbPodCast.max = mediaPlayer!!.duration
+            pbPodCast.max = mediaPlayer?.duration ?: 0
             //tvMaxTime.setText(milliSecondToString(pbPodCast.max))
-            tvPodCastTimeLeft.setText(milliSecondToString(mediaPlayer!!.currentPosition))
-            pbPodCast.progress = mediaPlayer!!.currentPosition
+            tvPodCastTimeLeft.setText(milliSecondToString((mediaPlayer?.currentPosition ?: 0)))
+            pbPodCast.progress =(mediaPlayer?.currentPosition ?: 0)
 
             btnPlay.setImageDrawable(getDrawable(R.drawable.ic_baseline_pause_circle_outline_24))
-            mediaPlayer!!.start()
+            mediaPlayer?.start()
 
         }
     }
@@ -323,9 +333,9 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
       private fun updateSeekBar() {
 
-            endTime = mediaPlayer!!.duration
+            endTime = (mediaPlayer?.duration ?: 0)
 
-            playTime = mediaPlayer!!.currentPosition
+            playTime =(mediaPlayer?.currentPosition ?: 0)
 
             pbPodCast.max = endTime
 
@@ -333,9 +343,9 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
         }
 
     private fun UIUpdate(){
-        tvPodCastTimeStart.setText(milliSecondToString( mediaPlayer!!.currentPosition))
-        tvPodCastTimeLeft.setText(milliSecondToString(endTime-mediaPlayer!!.currentPosition))
-        pbPodCast.progress = mediaPlayer!!.currentPosition
+        tvPodCastTimeStart.setText(milliSecondToString((mediaPlayer?.currentPosition ?: 0)))
+        tvPodCastTimeLeft.setText(milliSecondToString(endTime-((mediaPlayer?.currentPosition ?: 0) ?: 0)))
+        pbPodCast.progress =(mediaPlayer?.currentPosition ?: 0)
     }
 
     override fun onDestroy() {
@@ -367,13 +377,10 @@ class PodCastDetailActivity : BaseActivity(), DetailView {
 
 
 
-
-
     private fun releasePlayer() {
         if (mediaPlayer != null) {
-            // playbackPosition = mediaPlayer!!.currentPosition.toLong()
-            mediaPlayer!!.stop()
-            mediaPlayer!!.release()
+            // playbackPosition = mediaPlayer?.(mediaPlayer?.currentPosition ?: 0).toLong()
+            mediaPlayer?.release()
             mediaPlayer = null
         }
     }

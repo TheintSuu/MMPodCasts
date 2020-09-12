@@ -14,10 +14,6 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import com.theintsuhtwe.mmpodcasts.R
 import com.theintsuhtwe.mmpodcasts.activities.MainActivity
 import com.theintsuhtwe.mmpodcasts.data.model.DownloadModelImpl
@@ -85,7 +81,6 @@ class FileDownloadAsync(
                 , fileName
             )
             url = tmpFile.absolutePath.toString()
-
             //val tmpFile = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
             val url = URL(fileUrl)
             val conection: URLConnection = url.openConnection()
@@ -104,7 +99,6 @@ class FileDownloadAsync(
 //              tmpFile
 //            )
 
-            Environment.getStorageDirectory()
             val data = ByteArray(1024)
             var total: Long = 0
             var count: Int = 0
@@ -172,6 +166,7 @@ class FileDownloadAsync(
                                     pub_date_ms = episodeVO.pub_date_ms,
                                     podcast = it.podcast,
                                     thumbnail = episodeVO.thumbnail
+
                                 )
 
 

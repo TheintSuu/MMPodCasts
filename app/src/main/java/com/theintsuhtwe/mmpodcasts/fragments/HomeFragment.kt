@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,7 +41,7 @@ class HomeFragment : Fragment(), MainView {
     private var param1: String? = null
     private var param2: String? = null
 
-    var play_back_episode_Id : String = " "
+    var play_back_episode_Id : String ?= null
 
     lateinit var mMainAdapter: PodCastAdapter
 
@@ -76,6 +75,8 @@ class HomeFragment : Fragment(), MainView {
         setUpSwipeRefresh()
 
         setUpRecyclerView()
+
+        setUpListener()
 
 
     }
@@ -119,11 +120,6 @@ class HomeFragment : Fragment(), MainView {
             activity?.let { loadImage(it, podCast.image, exo_rev ) }
         }
 
-
-
-
-
-
     }
 
     override fun displayPodCastsList(podCastsList: List<EpisodeVO>) {
@@ -149,6 +145,10 @@ class HomeFragment : Fragment(), MainView {
             .setPositiveButton(android.R.string.ok) { dialog, which -> startDownload(episodeVO)}
             .create().show()
 
+    }
+
+    override fun updatePlayBackId(episodeId: String) {
+       play_back_episode_Id = episodeId
     }
 
     override fun enableSwipeRefresh() {
@@ -207,5 +207,12 @@ class HomeFragment : Fragment(), MainView {
             mPresenter.onSwipeRefresh(this)
         }
 
+    }
+
+
+    private fun setUpListener(){
+        playbackCardLayout.setOnClickListener {
+            play_back_episode_Id?.let { it1 -> mPresenter.onTabAudioPlay(it1) }
+        }
     }
 }

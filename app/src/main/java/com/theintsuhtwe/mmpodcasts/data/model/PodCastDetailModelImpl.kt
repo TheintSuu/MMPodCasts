@@ -2,6 +2,7 @@ package com.theintsuhtwe.mmpodcasts.data.model
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import com.theintsuhtwe.mmpodcasts.data.vos.EpisodeDetailVO
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -13,7 +14,7 @@ object PodCastDetailModelImpl : PodCastDetail, BaseModel() {
         podCastId: String,
         onError: (String) -> Unit
     ): LiveData<EpisodeDetailVO> {
-        return mPodCastDB.detailDao().getdetailById(podCastId)
+        return Transformations.distinctUntilChanged(mPodCastDB.detailDao().getdetailById(podCastId))
 
     }
 

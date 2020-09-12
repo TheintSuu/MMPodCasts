@@ -8,4 +8,7 @@ data class Genres(
     @SerializedName("id")  val id: Int,
     @SerializedName("name")  val name: String,
     @SerializedName("parent_id")  val parent_id: Int
+
 )
+
+

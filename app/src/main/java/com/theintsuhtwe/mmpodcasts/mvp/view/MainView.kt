@@ -14,6 +14,8 @@ interface MainView : BaseView {
 
     fun navigateToDownloadAudio(episodeVO: EpisodeVO)
 
+    fun updatePlayBackId(episodeId : String)
+
     fun enableSwipeRefresh()
 
     fun disableSwipeRefresh()

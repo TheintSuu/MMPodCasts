@@ -1,10 +1,21 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ChipTheme" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipStartPadding">@dimen/margin_small</item>
+        <item name="chipEndPadding">@dimen/margin_small</item>
+        <item name="chipBackgroundColor">@color/category1</item>
+    <item name="android:textAppearance">@style/ChipTextAppearance</item>
+    </style>
+    <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">@dimen/text_label_small</item>
     </style>
 
 </resources>

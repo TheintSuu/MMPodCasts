@@ -93,7 +93,8 @@ class MainPresenterImpl : MainPresenter, AbstractBasePresenter<MainView>() {
             mView?.enableSwipeRefresh()
         }).observe(lifeCycleOwner, Observer {
             mView?.disableSwipeRefresh()
-             mView?.displayRandomPodCast(it)
+            mView?.displayRandomPodCast(it)
+            mView?.updatePlayBackId(it.id)
         })
     }
 

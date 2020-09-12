@@ -35,4 +35,26 @@ data class PodcastVO(
 //    @SerializedName("website")  val website: String
 
 
-)
+){
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as PodcastVO
+
+        if (genre_ids != other.genre_ids) return false
+        if (podCastId != other.podCastId) return false
+        if (description != other.description) return false
+        if (title != other.title) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = genre_ids.hashCode()
+        result = 31 * result + podCastId.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + title.hashCode()
+        return result
+    }
+}
